@@ -1,0 +1,61 @@
+name: Testing
+
+on:
+  pull_request:
+    types: [ edited, reopened, ready_for_review, synchronize, opened ]
+
+env:
+  ORGANIZATION: proyectos-enee
+
+jobs:
+  testing-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8
+
+      - name: Runing building test
+        run: |
+          cd frontend
+          pnpm install
+          pnpm run build
+
+  testing-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+          dotnet-root: ${{ github.workspace }}/.dotnet
+
+      - name: Agregar source de nuget
+        run: |
+          dotnet nuget remove source github || true
+          dotnet nuget add source https://nuget.pkg.github.com/${{ env.ORGANIZATION }}/index.json --name github --username ${{ github.actor }} --password ${{ vars.ACCESS_TOKEN }} --store-password-in-clear-text
+
+      - name: Runing building test
+        env:
+          DB__CONEXION: "Server=localhost;Database=Capacitaciones;User Id=postgres; Password=Capacitaciones;Enlist=true;"
+          DB__SCHEMA_EVENTS: Capacitaciones_events
+          DB__SCHEMA_DOCS: Capacitaciones_docs
+          DB__SCHEMA_TABLES: Capacitaciones
+          AUTH__SERVER: http://localhost:8080
+          AUTH__CORS_ORIGINS: http://localhost:5173
+          AUTH__CLIENT_ID: api
+          AUTH__CLIENT_SECRET: api
+          AUTH__AUDIENCE: api
+        run: |
+          cd backend
+          cd Capacitaciones.Api
+          dotnet restore Capacitaciones.Api.csproj
+          dotnet run -- codegen write
+          dotnet build "Capacitaciones.Api.csproj" -c Release
