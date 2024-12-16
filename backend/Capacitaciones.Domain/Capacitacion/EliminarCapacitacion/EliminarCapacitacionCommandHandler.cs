@@ -13,7 +13,7 @@ public class EliminarCapacitacionCommandHandler:ICommandHandler<EliminarCapacita
     }
     public async Task Handle(EliminarCapacitacionCommand command)
     {
-        var capacitacion = await Repository.Find(command.Id).ConfigureAwait(false);
+        var capacitacion = await Repository.Find(command.CodigoCapacitacion).ConfigureAwait(false);
         capacitacion.Eliminar();
         await Repository.Update(capacitacion).ConfigureAwait(false);
     }

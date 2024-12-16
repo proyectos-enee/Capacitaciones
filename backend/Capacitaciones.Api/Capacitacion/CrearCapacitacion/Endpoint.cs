@@ -31,7 +31,7 @@ public static class Endpoint
             .Produces<CapacitacionResponse>()
             // .RequireAuthorization()
             .WithSummary("Crear capacitacion")
-            .WithDescription("Permite crear un almacen y devuelve el identificador del almacen creado")
+            .WithDescription("Permite crear una capacitacion y devuelve el identificador de la capacitacion creada")
             .WithOpenApi();
     }
 }

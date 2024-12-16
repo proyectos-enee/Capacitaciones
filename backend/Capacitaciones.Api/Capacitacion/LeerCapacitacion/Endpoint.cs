@@ -3,11 +3,11 @@ using Enee.Core.Domain;
 using Capacitaciones.Domain.Capacitacion.ConsultarCapacitacion;
 using Capacitaciones.Domain.Capacitacion.Projections.Capacitacion;
 
-namespace Capacitaciones.Api.Capacitacion.RecuperarCapacitacion;
+namespace Capacitaciones.Api.Capacitacion.LeerCapacitacion;
 
 public static class Endpoint
 {
-    public static void RecuperarCapacitacion(this IEndpointRouteBuilder app)
+    public static void LeerCapacitacion(this IEndpointRouteBuilder app)
     {
         app.MapGet(
             "/",

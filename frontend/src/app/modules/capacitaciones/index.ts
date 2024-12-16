@@ -4,4 +4,3 @@ import { lazy } from 'react';
 const CapacitacionesModule = Loadable(lazy(() => import('./capacitaciones-routing')));
 
 export default CapacitacionesModule;
-

@@ -5,9 +5,8 @@ import {
   InputText,
 } from '@components/form';
 import { Grid } from '@mui/material';
-
 import * as yup from 'yup';
-
+import TimePickerComponent from '@components/form/date-time/time-picker';
 import { Row } from '@components/ui-layout/row.tsx';
 import { Col } from '@components/ui-layout/col.tsx';
 
@@ -15,7 +14,7 @@ const validations = yup.object({
   codigoCapacitacion: yup.string().required('Campo requerido'),
   nombreCorto: yup.string().required('Campo requerido'),
   nombreLargo: yup.string().required('Campo requerido'),
-  descripcion: yup.string().nullable(),
+  descripcion: yup.string().required('Campo requerido'),
   enteCapacitador: yup.string().required('Campo requerido'),
   modalidad: yup
     .object()
@@ -26,7 +25,10 @@ const validations = yup.object({
     .required('Campo requerido'),
   lugar: yup.string().nullable(),
   horario: yup.string().nullable(),
-  fechaInicioRegistro: yup.date().required('Campo requerido'),
+  fechaInicioRegistro: yup
+    .date()
+    .min(new Date(), 'La fecha de inicio debe ser posterior a la fecha actual')
+    .required('Campo requerido'),
   fechaFinRegistro: yup
     .date()
     .min(
@@ -56,6 +58,7 @@ export const CapacitacionFormulario = ({ nombreFormulario, onSubmit }: Props) =>
   const modalidades = [
     { name: 'Virtual', id: 'virtual' },
     { name: 'Presencial', id: 'presencial' },
+    { name: 'Híbrido', id: 'hibrido' },
   ];
 
   const estados = [
@@ -111,7 +114,7 @@ export const CapacitacionFormulario = ({ nombreFormulario, onSubmit }: Props) =>
                 <InputText label="Lugar" name="lugar" />
               </Col>
               <Col>
-                <InputText label="Horario" name="horario" />
+                <TimePickerComponent label="Horario" name="horario" />
               </Col>
             </Row>
             <Row>
@@ -146,4 +149,5 @@ export const CapacitacionFormulario = ({ nombreFormulario, onSubmit }: Props) =>
     </HookForm>
   );
 };
+
 

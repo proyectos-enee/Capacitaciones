@@ -13,76 +13,72 @@ import {
   generateActionColumn,
 } from '@components/grid/components/action-column.tsx';
 import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import VisibilityIcon from '@mui/icons-material/Visibility';
 import { Button } from '@components/button/button.tsx';
 import { BtnGroup, GroupToolbar } from '@components/toolbar-group/group-toolbar.tsx';
 import { useNavigate } from 'react-router';
-
 const Pagina = () => {
   const navigate = useNavigate();
   const confirm = useConfirmDialog();
   const { success, error } = useNotification();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [search, setSearch] = useState<any>({});
-  const [{ data }, refetch] = usePaginate<any>(httpApi, 'capacitaciones', search, {
+  const [{ data }] = usePaginate<any>(httpApi, '', search, {
     pageIn: 1,
     sizeIn: 5,
     sizeOptions: [5, 10],
   });
 
-  const eliminarCapacitacion = async (id: string) => {
+  const open = async () => {
     const result = await confirm({
-      description: '¿Estás seguro de que deseas eliminar esta capacitación?',
+      description:
+        'Por favor, ayudame a enteder si estas seguro de que la accion que realizaras es correcta ',
     });
     if (result) {
-      try {
-        await httpApi.delete(`capacitaciones/${id}`);
-        success('Capacitación eliminada correctamente');
-        refetch(); // Refrescar la lista después de eliminar
-      } catch (e) {
-        error('Error al eliminar la capacitación');
-      }
+      alert('Confirmado');
     }
   };
 
-  const buscarCapacitacion = () => {
-    setSearch({ nombreCorto: search.nombreCorto === undefined ? 'ejemplo' : undefined });
+  const toast = () => {
+    success('I love snacks.');
+    success(' snacks.');
+    error('Error snacks.');
+  };
+
+  const buscarNombre = () => {
+    setSearch({ codigoCapacitacion: search.codigoCapacitacion === undefined ? 'jose' : undefined });
   };
 
   const actions: Array<ActionColumn> = [
     {
-      color: 'info',
-      icon: <VisibilityIcon />,
-      label: 'Detalles',
-      onClick: (rowData: any) => {
-        navigate(`/capacitaciones/${rowData.id}`);
-      },
-    },
-    {
-      color: 'primary',
-      icon: <EditIcon />,
-      label: 'Editar',
-      onClick: (rowData: any) => {
-        navigate(`/capacitaciones/${rowData.id}/editar`);
-      },
-    },
-    {
       color: 'error',
       icon: <DeleteIcon />,
-      label: 'Eliminar',
       onClick: (rowData: any) => {
-        eliminarCapacitacion(rowData.id);
+        alert(rowData.codigoCapacitacion);
+      },
+    },
+    {
+      color: 'info',
+      icon: <DeleteIcon />,
+      onClick: (rowData: any) => {
+        alert(rowData.codigoCapacitacion);
+      },
+    },
+    {
+      color: 'warning',
+      label: 'Warning',
+      icon: <></>,
+      onClick: (rowData: any) => {
+        alert(rowData.codigoCapacitacion);
       },
     },
   ];
-
-  const columns: ColumnDef[] = [
+  const colums: ColumnDef[] = [
     {
       headerName: 'Acciones',
       renderCell: generateActionColumn(actions),
     },
     {
-      headerName: 'Código',
+      headerName: 'Codigo Capacitacion',
       field: 'codigoCapacitacion',
     },
     {
@@ -94,30 +90,36 @@ const Pagina = () => {
       field: 'estado',
     },
   ];
-
-  const nuevo = () => {
+  const actualizar = ()=> {
+    navigate('/capacitaciones/actualizar');
+  }
+  const eliminar = ()=> {
+    navigate('/capacitaciones/eliminar');
+  }
+  const nuevo = ()=>{
     navigate('/capacitaciones/crear');
-  };
-
+  }
   return (
     <>
       <MainCard xs={{ maxWidth: '1200px' }}>
         <GroupToolbar>
           <BtnGroup>
-            <Button onClick={() => buscarCapacitacion()}>Buscar</Button>
+            <Button onClick={() => open()}>Open</Button>
+            <Button onClick={() => toast()}>Toast</Button>
+            <Button onClick={() => eliminar()}>Eliminar</Button>
+            <Button onClick={() => actualizar()}>Actualizar</Button>
+            <Button onClick={() => buscarNombre()}>buscar</Button>
             <Button onClick={() => nuevo()}>Nuevo</Button>
-
-
           </BtnGroup>
         </GroupToolbar>
 
+
         <PaginableGrid
           paginable={data as PaginateResult<any>}
-          columnDefs={columns}
+          columnDefs={colums}
         />
       </MainCard>
     </>
   );
 };
-
 export default Pagina;

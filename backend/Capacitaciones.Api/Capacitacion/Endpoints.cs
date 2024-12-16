@@ -1,6 +1,8 @@
 ﻿using Carter;
 using Capacitaciones.Api.Capacitacion.CrearCapacitacion;
-using Capacitaciones.Api.Capacitacion.RecuperarCapacitacion;
+using Capacitaciones.Api.Capacitacion.LeerCapacitacion;
+using Capacitaciones.Api.Capacitacion.EliminarCapacitacion;
+
 
 namespace Capacitaciones.Api.Capacitacion;
 
@@ -14,6 +16,8 @@ public class Endpoints:CarterModule
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
           app.CrearCapacitacion();
-          app.RecuperarCapacitacion();
+          app.LeerCapacitacion();
+          app.EliminarCapacitacion();
+
     }
 }

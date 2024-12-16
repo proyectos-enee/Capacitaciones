@@ -7,38 +7,37 @@ import { useNotification } from '@components/snackbar/use-notification.ts';
 import { crearCapacitacion } from './api.ts';
 import { Button } from '@components/button/button.tsx';
 
-const nameForm = 'formularioCapacitacion';
+const nameForm = 'cualquierCosa';
+
 const Pagina = () => {
-  const { success, error } = useNotification();
+  const { success } = useNotification();
 
   const guardar = async (values: any) => {
-    try {
-      console.log('INSERTAR', values);
-      await crearCapacitacion({
-        id: '', // El ID puede generarse en el backend
-        codigoCapacitacion: values.codigoCapacitacion,
-        nombreCorto: values.nombreCorto,
-        nombreLargo: values.nombreLargo,
-        descripcion: values.descripcion || '',
-        enteCapacitador: values.enteCapacitador,
-        modalidad: values.modalidad.id, // Asegúrate de enviar el ID de la modalidad
-        lugar: values.lugar || '',
-        horario: values.horario || '',
-        fechaInicioRegistro: values.fechaInicioRegistro,
-        fechaFinRegistro: values.fechaFinRegistro,
-        estado: values.estado.id, // Asegúrate de enviar el ID del estado
-      });
-      success('Capacitación guardada correctamente');
-    } catch (e) {
-      console.error('Error al guardar la capacitación:', e);
-      error('Ocurrió un error al guardar la capacitación');
-    }
+    console.log('INSERTAR', values);
+
+    // Aquí es donde se llaman los datos para crear la capacitación.
+    await crearCapacitacion({
+      id: '3ed540e2-4c9b-4228-a99f-a8a6c5d695d7', // ID generado (puedes generar uno dinámicamente si es necesario)
+      codigoCapacitacion: values.codigoCapacitacion, // Usamos el código capturado
+      nombreCorto: values.nombreCorto,
+      nombreLargo: values.nombreLargo,
+      descripcion: values.descripcion, // Campo opcional
+      enteCapacitador: values.enteCapacitador,
+      modalidad: values.modalidad.id, // Aquí asumimos que modalidad es un objeto con un `id`
+      lugar: values.lugar, // Campo opcional
+      horario: values.horario, // Campo opcional
+      fechaInicioRegistro: values.fechaInicioRegistro,
+      fechaFinRegistro: values.fechaFinRegistro,
+      estado: values.estado.id, // Aquí asumimos que estado es un objeto con un `id`
+    });
+
+    success('Capacitación guardada correctamente');
   };
 
   return (
     <MainCard xs={{ maxWidth: '1200px' }}>
       <CapacitacionFormulario
-        onSubmit={values => guardar(values)}
+        onSubmit={values => guardar(values)} // Se pasa `values` con el tipo `any`
         nombreFormulario={nameForm}
       />
       <Row>
@@ -53,4 +52,3 @@ const Pagina = () => {
 };
 
 export default Pagina;
-

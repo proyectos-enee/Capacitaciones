@@ -12,16 +12,20 @@ namespace Capacitaciones.Domain.Capacitacion.EliminarCapacitacion
         public EliminarCapacitacionValidator(IReadOnlyDocumentRepository<CapacitacionDocumento> repository)
         {
             Repository = repository;
-            RuleFor(x => x.Id).NotEmpty().NotNull().Custom(VerificarExistaEnTablaDocumento);
+
+            // Asegúrate de que el codigoCapacitacion no esté vacío ni nulo
+            RuleFor(x => x.CodigoCapacitacion).NotEmpty().NotNull().Custom(VerificarExistaEnTablaDocumento);
         }
 
-        private void VerificarExistaEnTablaDocumento(Guid id, ValidationContext<EliminarCapacitacionCommand> context)
+        // Método de validación que ahora busca por codigoCapacitacion
+        private void VerificarExistaEnTablaDocumento(string codigoCapacitacion, ValidationContext<EliminarCapacitacionCommand> context)
         {
-            var existe = Repository.AsQueryable().Any(x => x.Id == id);
+            // Buscamos por codigoCapacitacion
+            var existe = Repository.AsQueryable().Any(x => x.CodigoCapacitacion == codigoCapacitacion);
 
             if (!existe)
             {
-                context.AddFailure("No existe elemento que desea eliminar");
+                context.AddFailure("No existe un elemento con el código de capacitación proporcionado.");
             }
         }
     }
