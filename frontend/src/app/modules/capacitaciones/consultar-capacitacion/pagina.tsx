@@ -44,8 +44,8 @@ const Pagina = () => {
     error('Error snacks.');
   };
 
-  const buscarNombre = () => {
-    setSearch({ codigoCapacitacion: search.codigoCapacitacion === undefined ? 'jose' : undefined });
+  const eliminarCapacitacion = () => {
+    setSearch({ codigoCapacitacion: search.codigoCapacitacion === undefined ? '0055' : undefined });
   };
 
   const actions: Array<ActionColumn> = [
@@ -93,6 +93,7 @@ const Pagina = () => {
   const actualizar = ()=> {
     navigate('/capacitaciones/actualizar');
   }
+
   const eliminar = ()=> {
     navigate('/capacitaciones/eliminar');
   }
@@ -108,7 +109,7 @@ const Pagina = () => {
             <Button onClick={() => toast()}>Toast</Button>
             <Button onClick={() => eliminar()}>Eliminar</Button>
             <Button onClick={() => actualizar()}>Actualizar</Button>
-            <Button onClick={() => buscarNombre()}>buscar</Button>
+            <Button onClick={() => eliminarCapacitacion()}>buscar</Button>
             <Button onClick={() => nuevo()}>Nuevo</Button>
           </BtnGroup>
         </GroupToolbar>

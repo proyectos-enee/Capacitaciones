@@ -25,13 +25,13 @@ public class CapacitacionController : ControllerBase
     }
 
    [HttpGet]
-    public async Task<IPaginated<CapacitacionDocumento>> ConsultarPaginado([FromQuery] int? page,int? pageSize, string? nombre)
+    public async Task<IPaginated<CapacitacionDocumento>> ConsultarPaginado([FromQuery] int? page,int? pageSize, string? codigoCapacitacion)
     {
         var result = await QueryDispatcher.Execute(new ConsultaCapacitacionPaginado()
         {
             Page = page,
             PageSize = pageSize,
-            CodigoCapacitacion = nombre
+            CodigoCapacitacion = codigoCapacitacion,
         }).ConfigureAwait(false);
         return result;
     }

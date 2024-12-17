@@ -10,22 +10,28 @@ import { Button } from '@components/button/button.tsx';
 const nameForm = 'cualquierCosa';
 
 const Pagina = () => {
-  const { success, error } = useNotification(); // También manejamos errores
+  const { success } = useNotification();
 
   const eliminar = async (values: any) => {
     console.log('ELIMINAR', values);
 
-    try {
-      // Intentamos eliminar la capacitación
-      await eliminarCapacitacion({
-        codigoCapacitacion: values.codigoCapacitacion, // Usamos el código capturado
-      });
+    // Aquí es donde se llaman los datos para crear la capacitación.
+    await eliminarCapacitacion({
+      id: '3ed540e2-4c9b-4228-a99f-a8a6c5d695d7', // ID generado (puedes generar uno dinámicamente si es necesario)
+      codigoCapacitacion: values.codigoCapacitacion, // Usamos el código capturado
+      nombreCorto: values.nombreCorto,
+      nombreLargo: values.nombreLargo,
+      descripcion: values.descripcion, // Campo opcional
+      enteCapacitador: values.enteCapacitador,
+      modalidad: values.modalidad.id, // Aquí asumimos que modalidad es un objeto con un `id`
+      lugar: values.lugar, // Campo opcional
+      horario: values.horario, // Campo opcional
+      fechaInicioRegistro: values.fechaInicioRegistro,
+      fechaFinRegistro: values.fechaFinRegistro,
+      estado: values.estado.id, // Aquí asumimos que estado es un objeto con un `id`
+    });
 
-      success('Capacitación eliminada correctamente');
-    } catch (err) {
-      error('Hubo un problema al eliminar la capacitación');
-      console.error(err); // Puedes loguear el error para mayor detalle
-    }
+    success('Capacitación eliminada correctamente');
   };
 
   return (

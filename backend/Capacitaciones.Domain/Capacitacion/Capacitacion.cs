@@ -1,60 +1,134 @@
 ﻿using Enee.Core.Domain;
 using Capacitaciones.Domain.Capacitacion.CrearCapacitacion;
 using Capacitaciones.Domain.Capacitacion.EliminarCapacitacion;
+using Capacitaciones.Domain.Capacitacion.ActualizarCapacitacion;
 
 namespace Capacitaciones.Domain.Capacitacion;
 
-public class Capacitacion:AggregateRoot<Guid>
+public class Capacitacion : AggregateRoot<Guid>
 {
+    // Constructor por defecto requerido para la reconstrucción de agregados
     public Capacitacion()
     {
-
     }
-    public Capacitacion(Guid id, string codigoCapacitacion, string nombreCorto, string nombreLargo, string descripcion, string enteCapacitador, string modalidad, string? lugar, string? horario, DateTime fechaInicioRegistro, DateTime fechaFinRegistro,  string estado)
+
+    // Constructor para crear una nueva capacitación
+    public Capacitacion(
+        Guid id,
+        string codigoCapacitacion,
+        string nombreCorto,
+        string nombreLargo,
+        string descripcion,
+        string enteCapacitador,
+        string modalidad,
+        string? lugar,
+        string? horario,
+        DateTime fechaInicioRegistro,
+        DateTime fechaFinRegistro,
+        string estado)
     {
-        Apply(NewChange(new CapacitacionCreada(id, codigoCapacitacion, nombreCorto, nombreLargo, descripcion, enteCapacitador, modalidad, lugar, horario, fechaInicioRegistro, fechaFinRegistro, estado)));
+        Apply(NewChange(new CapacitacionCreada(
+            id,
+            codigoCapacitacion,
+            nombreCorto,
+            nombreLargo,
+            descripcion,
+            enteCapacitador,
+            modalidad,
+            lugar,
+            horario,
+            fechaInicioRegistro,
+            fechaFinRegistro,
+            estado
+        )));
     }
 
-
+    // Propiedades del agregado
     public override Guid Id { get; set; }
-    public string CodigoCapacitacion { get; set; }
-    public string NombreCorto { get; set; }
-    public string NombreLargo { get; set; }
-    public string? Descripcion { get; set; }
-    public string EnteCapacitador { get; set; }
-    public string Modalidad { get; set; }
-    public string? Lugar { get; set; }
-    public string? Horario { get; set; }
-    public DateTime FechaInicioRegistro { get; set; }
-    public DateTime FechaFinRegistro { get; set; }
-    public string Estado { get; set; }
+    public string CodigoCapacitacion { get; private set; }
+    public string NombreCorto { get; private set; }
+    public string NombreLargo { get; private set; }
+    public string? Descripcion { get; private set; }
+    public string EnteCapacitador { get; private set; }
+    public string Modalidad { get; private set; }
+    public string? Lugar { get; private set; }
+    public string? Horario { get; private set; }
+    public DateTime FechaInicioRegistro { get; private set; }
+    public DateTime FechaFinRegistro { get; private set; }
+    public string Estado { get; private set; }
 
+    // Método para eliminar la capacitación
     public void Eliminar()
     {
-        Apply(NewChange(new CapacitacionEliminada(this.Id)));
+        Apply(NewChange(new CapacitacionEliminada(Id)));
     }
 
+    // Método para actualizar los datos de la capacitación
+    public void Actualizar(
+        string codigoCapacitacion,
+        string nombreCorto,
+        string nombreLargo,
+        string descripcion,
+        string enteCapacitador,
+        string modalidad,
+        string? lugar,
+        string? horario,
+        DateTime fechaInicioRegistro,
+        DateTime fechaFinRegistro,
+        string estado)
+    {
+        Apply(NewChange(new CapacitacionActualizada(
+            Id,
+            codigoCapacitacion,
+            nombreCorto,
+            nombreLargo,
+            descripcion,
+            enteCapacitador,
+            modalidad,
+            lugar,
+            horario,
+            fechaInicioRegistro,
+            fechaFinRegistro,
+            estado
+        )));
+    }
+
+    // Métodos para aplicar eventos de dominio
     private void Apply(CapacitacionCreada @event)
     {
-        this.Id = @event.AggregateId;
-        this.CodigoCapacitacion = @event.CodigoCapacitacion;
-        this.NombreCorto  = @event.NombreCorto ;
-        this.NombreLargo  = @event.NombreLargo ;
-        this.Descripcion  = @event.Descripcion ;
-        this.EnteCapacitador  = @event.EnteCapacitador ;
-        this.Modalidad  = @event.Modalidad ;
-        this.Lugar  = @event.Lugar ;
-        this.NombreCorto  = @event.NombreCorto ;
-        this.Horario  = @event.Horario ;
-        this.FechaInicioRegistro  = @event.FechaInicioRegistro ;
-        this.FechaFinRegistro  = @event.FechaFinRegistro ;
-        this.Estado  = @event.Estado;
-        Version++; // de validar en las pull request
+        Id = @event.AggregateId;
+        CodigoCapacitacion = @event.CodigoCapacitacion;
+        NombreCorto = @event.NombreCorto;
+        NombreLargo = @event.NombreLargo;
+        Descripcion = @event.Descripcion;
+        EnteCapacitador = @event.EnteCapacitador;
+        Modalidad = @event.Modalidad;
+        Lugar = @event.Lugar;
+        Horario = @event.Horario;
+        FechaInicioRegistro = @event.FechaInicioRegistro;
+        FechaFinRegistro = @event.FechaFinRegistro;
+        Estado = @event.Estado;
+        Version++;
+    }
+
+    private void Apply(CapacitacionActualizada @event)
+    {
+        CodigoCapacitacion = @event.CodigoCapacitacion;
+        NombreCorto = @event.NombreCorto;
+        NombreLargo = @event.NombreLargo;
+        Descripcion = @event.Descripcion;
+        EnteCapacitador = @event.EnteCapacitador;
+        Modalidad = @event.Modalidad;
+        Lugar = @event.Lugar;
+        Horario = @event.Horario;
+        FechaInicioRegistro = @event.FechaInicioRegistro;
+        FechaFinRegistro = @event.FechaFinRegistro;
+        Estado = @event.Estado;
+        Version++;
     }
 
     private void Apply(CapacitacionEliminada @event)
     {
         Version++;
     }
-
 }

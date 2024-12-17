@@ -19,6 +19,7 @@ export const CapacitacionesMenu: Menu = {
       access: [],
       children:[
         {
+
           id: 'Crear',
           title: 'Crear capacitacion',
           type: 'item',

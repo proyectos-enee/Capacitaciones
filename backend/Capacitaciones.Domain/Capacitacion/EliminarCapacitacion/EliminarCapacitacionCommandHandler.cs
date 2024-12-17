@@ -3,7 +3,7 @@ using Enee.Core.Domain.Repository;
 
 namespace Capacitaciones.Domain.Capacitacion.EliminarCapacitacion;
 
-public class EliminarCapacitacionCommandHandler:ICommandHandler<EliminarCapacitacionCommand>
+public class EliminarCapacitacionCommandHandler : ICommandHandler<EliminarCapacitacionCommand>
 {
     public IWritableEventStoreRepository<Capacitacion> Repository { get; }
 
@@ -11,10 +11,15 @@ public class EliminarCapacitacionCommandHandler:ICommandHandler<EliminarCapacita
     {
         Repository = repository;
     }
+
     public async Task Handle(EliminarCapacitacionCommand command)
     {
-        var capacitacion = await Repository.Find(command.CodigoCapacitacion).ConfigureAwait(false);
-        capacitacion.Eliminar();
-        await Repository.Update(capacitacion).ConfigureAwait(false);
+        var entity = await Repository.GetById(command.Id);
+        if (entity == null)
+        {
+            throw new NotFoundException($"Capacitación con ID {command.Id} no encontrada");
+        }
+
+        await Repository.Delete(entity);
     }
 }

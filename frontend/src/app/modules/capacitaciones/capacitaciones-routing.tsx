@@ -3,6 +3,7 @@ import ConsultarCapacitacion from './consultar-capacitacion';
 import CrearCapacitacion from './crear-capacitacion';
 import EliminarCapacitacion from './eliminar-capacitacion';
 
+
 const CapacitacionesRouting = () => {
   return (
     <>
@@ -10,6 +11,7 @@ const CapacitacionesRouting = () => {
         <Route path="" element={<ConsultarCapacitacion />} />
         <Route path={'crear'} element={<CrearCapacitacion />} />
         <Route path={'eliminar'} element={<EliminarCapacitacion />} />
+
       </Routes>
     </>
   );
