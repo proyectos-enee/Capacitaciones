@@ -20,6 +20,7 @@ export abstract class HttpAxios {
     payload: any,
     config?: AxiosRequestConfig,
   ): Promise<T> {
+    //en esta linea no conecta
     const response = await this.service.patch<T>(path, payload, config);
     return response.data;
   }

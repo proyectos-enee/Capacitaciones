@@ -1,6 +1,6 @@
 ﻿namespace Capacitaciones.Api.Capacitacion.ActualizarCapacitacion;
 
-public class CapacitacionRequest
+public class ActualizarCapacitacionRequest
 {
     public string CodigoCapacitacion { get; set; }
     public string NombreCorto { get; set; }

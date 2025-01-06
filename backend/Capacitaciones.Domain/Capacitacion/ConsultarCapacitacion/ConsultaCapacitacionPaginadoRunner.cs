@@ -19,7 +19,7 @@ public class ConsultaCapacitacionPaginadoRunner:IQueryRunner<ConsultaCapacitacio
     {
         var spec = new SpecificationGeneric<CapacitacionDocumento>();
         spec.Query.Where(x => x.CodigoCapacitacion.Contains(query.CodigoCapacitacion),
-            !string.IsNullOrWhiteSpace(query.NombreCapacitacion));
+            !string.IsNullOrWhiteSpace(query.NombreCorto));
         spec.Query.OrderBy(x => x.CodigoCapacitacion);
         var paginated = await Repository.Paginate(query.Page, query.PageSize, spec);
         return paginated;

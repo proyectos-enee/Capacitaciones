@@ -62,8 +62,8 @@ export const CapacitacionFormulario = ({ nombreFormulario, onSubmit }: Props) =>
   ];
 
   const estados = [
-    { name: 'Activo', id: 'activo' },
-    { name: 'Inactivo', id: 'inactivo' },
+    { name: 'Disponible', id: 'disponible' },
+    { name: 'No Disponible', id: 'no disponible' },
   ];
 
   return (

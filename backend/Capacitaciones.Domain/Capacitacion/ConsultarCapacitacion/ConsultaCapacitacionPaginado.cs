@@ -9,7 +9,7 @@ public class ConsultaCapacitacionPaginado:IQuery<IPaginated<CapacitacionDocument
     public string Description { get; } = "Consulta de capacitaciones en forma paginada";
 
     public string? CodigoCapacitacion { get; set; }
-    public string? NombreCapacitacion { get; set; }
+    public string? NombreCorto { get; set; }
     public int? PageSize { get; set; }
     public int? Page { get; set; }
 }

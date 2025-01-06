@@ -1,10 +1,14 @@
-﻿using Enee.Core.Common;
+﻿﻿using Enee.Core.Common;
 
 namespace Capacitaciones.Domain.Capacitacion.CrearCapacitacion;
 
 public class CapacitacionCreada:DomainEvent<Guid>
 {
-    public CapacitacionCreada(Guid aggregateId, string codigoCapacitacion, string nombreCorto, string nombreLargo, string descripcion, string enteCapacitador, string modalidad,string lugar , string horario , DateTime fechaInicioRegistro, DateTime fechaFinRegistro, string estado) : base(aggregateId)
+    public CapacitacionCreada(Guid aggregateId,
+        string codigoCapacitacion, string nombreCorto,
+        string nombreLargo, string descripcion, string enteCapacitador,
+        string modalidad,string lugar , string horario , DateTime fechaInicioRegistro,
+        DateTime fechaFinRegistro, string estado) : base(aggregateId)
     {
         CodigoCapacitacion = codigoCapacitacion;
         NombreCorto = nombreCorto;

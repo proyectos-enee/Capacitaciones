@@ -17,18 +17,18 @@ const Pagina = () => {
 
     // Aquí es donde se llaman los datos para crear la capacitación.
     await crearCapacitacion({
-      id: '3ed540e2-4c9b-4228-a99f-a8a6c5d695d7', // ID generado (puedes generar uno dinámicamente si es necesario)
-      codigoCapacitacion: values.codigoCapacitacion, // Usamos el código capturado
+      id: '3ed540e2-4c9b-4228-a99f-a8a6c5d695d7',
+      codigoCapacitacion: values.codigoCapacitacion,
       nombreCorto: values.nombreCorto,
       nombreLargo: values.nombreLargo,
-      descripcion: values.descripcion, // Campo opcional
+      descripcion: values.descripcion,
       enteCapacitador: values.enteCapacitador,
-      modalidad: values.modalidad.id, // Aquí asumimos que modalidad es un objeto con un `id`
-      lugar: values.lugar, // Campo opcional
-      horario: values.horario, // Campo opcional
+      modalidad: values.modalidad.id,
+      lugar: values.lugar,
+      horario: values.horario,
       fechaInicioRegistro: values.fechaInicioRegistro,
       fechaFinRegistro: values.fechaFinRegistro,
-      estado: values.estado.id, // Aquí asumimos que estado es un objeto con un `id`
+      estado: values.estado.id,
     });
 
     success('Capacitación guardada correctamente');

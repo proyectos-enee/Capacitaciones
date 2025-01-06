@@ -1,5 +1,4 @@
-﻿
-using Enee.Core.CQRS.Command;
+﻿using Enee.Core.CQRS.Command;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Capacitaciones.Domain.Capacitacion.CrearCapacitacion;
