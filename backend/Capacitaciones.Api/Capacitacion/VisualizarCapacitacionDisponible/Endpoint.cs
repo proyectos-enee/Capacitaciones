@@ -1,26 +1,33 @@
-﻿using Capacitaciones.Api.Utils;
-using Enee.Core.CQRS.Query;
-using Capacitaciones.Domain.Capacitacion.VisualizarCapacitacionDisponible;
+﻿using System.Runtime.InteropServices;
 
 namespace Capacitaciones.Api.Capacitacion.VisualizarCapacitacionDisponible;
 
 public static class Endpoint
 {
-    public static void VisualizarCapacitacion(this IEndpointRouteBuilder app)
+    public static void VisualizarCapacitacionDisponible(this IEndpointRouteBuilder app)
     {
-        app.MapGet("/", async (VisualizarCapacitacionRequest request, IDispatcher dispatcher) =>
+        app.MapGet("/disponibles", async (string? nombre, string? modalidad, DateTime? fechaInicio, DateTime? fechaFin, IDispatcher dispatcher) =>
             {
-                var result = await dispatcher.Dispatch(new VisualizarCapacitacionQuery(
-                    request.Nombre,
-                    request.Modalidad,
-                    request.FechaInicio,
-                    request.FechaFin
+                // Se crea un comando para consultar capacitaciones disponibles con filtros.
+                var result = await dispatcher.Dispatch(new VisualizarCapacitacionCommand(
+                    nombre,
+                    modalidad,
+                    fechaInicio,
+                    fechaFin
                 ));
-                return result.ToResponse();
+
+                if (result.Any())
+                {
+                    return Results.Ok(result); // Devuelve las capacitaciones filtradas.
+                }
+                else
+                {
+                    return Results.NoContent(); // Devuelve 204 No Content si no hay capacitaciones.
+                }
             })
-            .Produces<IEnumerable<VisualizarCapacitacionResponse>>()
-            .WithSummary("Visualizar capacitaciones disponibles")
-            .WithDescription("Permite listar capacitaciones disponibles según filtros aplicados")
+            .Produces<List<CapacitacionResponse>>()
+            .WithSummary("Ver capacitaciones disponibles")
+            .WithDescription("Permite ver las capacitaciones disponibles según filtros de nombre, modalidad y fechas.")
             .WithOpenApi();
     }
 }
