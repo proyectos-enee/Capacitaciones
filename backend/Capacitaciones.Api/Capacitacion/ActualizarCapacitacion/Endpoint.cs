@@ -8,11 +8,11 @@ public static class Endpoint
 {
     public static void ActualizarCapacitacion(this IEndpointRouteBuilder app)
     {
-        app.MapPut("/{id}", async (Guid id, ActualizarCapacitacionRequest request, IDispatcher dispatcher) =>
+        app.MapPut("/{id:guid}", async (Guid id, ActualizarCapacitacionRequest request, IDispatcher dispatcher) =>
         {
             try
             {
-                // Despachamos el comando de actualización con todos los valores proporcionados
+                // Despachar el comando para actualizar la capacitación
                 var result = await dispatcher.Dispatch(new ActualizarCapacitacionCommand(
                     id,
                     CodigoCapacitacion: request.CodigoCapacitacion,
@@ -28,32 +28,27 @@ public static class Endpoint
                     Estado: request.Estado
                 ));
 
-                // Devolver la respuesta con los detalles actualizados
-                return Results.Ok(new ActualizarCapacitacionResponse
+                if (result == null) // Validación adicional
                 {
-                    Id = id,
-                    CodigoCapacitacion = request.CodigoCapacitacion,
-                    NombreCorto = request.NombreCorto,
-                    NombreLargo = request.NombreLargo,
-                    Descripcion = request.Descripcion,
-                    EnteCapacitador = request.EnteCapacitador,
-                    Modalidad = request.Modalidad,
-                    Lugar = request.Lugar,
-                    Horario = request.Horario,
-                    FechaInicioRegistro = request.FechaInicioRegistro,
-                    FechaFinRegistro = request.FechaFinRegistro,
-                    Estado = request.Estado
-                });
+                    return Results.NotFound(new { Error = "No se encontró la capacitación para actualizar." });
+                }
+
+                return Results.Ok(new { Message = "Capacitación actualizada correctamente.", Id = id });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return Results.NotFound(new { Error = ex.Message });
             }
             catch (Exception ex)
             {
-                // Manejo de errores si ocurre algo
-                return Results.Problem(ex.Message, statusCode: 500);
+                return Results.Problem(detail: ex.Message, statusCode: 500, title: "Error inesperado.");
             }
         })
-        .Produces<ActualizarCapacitacionResponse>()
+        .Produces(200)
+        .Produces(404)
+        .Produces(500)
         .WithSummary("Actualizar capacitación")
-        .WithDescription("Permite actualizar los detalles de una capacitación dada su ID")
+        .WithDescription("Permite actualizar los datos de una capacitación existente y devuelve el estado de la operación.")
         .WithOpenApi();
     }
 }

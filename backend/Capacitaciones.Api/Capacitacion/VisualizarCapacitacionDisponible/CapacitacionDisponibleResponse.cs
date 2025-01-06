@@ -1,8 +1,9 @@
-﻿namespace Capacitaciones.Api.Capacitacion.VisualizarCapacitacionDisponible;
+﻿namespace Capacitaciones.Domain.Capacitacion.VisualizarCapacitacionDisponible;
 
-public class VisualizarCapacitacionResponse
+public class CapacitacionDisponibleResponse
 {
     public Guid Id { get; set; }
+    public string CodigoCapacitacion { get; set; }
     public string NombreCorto { get; set; }
     public string Modalidad { get; set; }
     public DateTime FechaInicioRegistro { get; set; }

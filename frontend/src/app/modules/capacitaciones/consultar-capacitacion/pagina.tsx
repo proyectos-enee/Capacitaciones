@@ -31,22 +31,6 @@ const Pagina = () => {
     sizeOptions: [5, 10],
   });
 
-  const open = async () => {
-    const result = await confirm({
-      description:
-        'Por favor, ayudame a entender si estás seguro de que la acción que realizarás es correcta.',
-    });
-    if (result) {
-      alert('Confirmado');
-    }
-  };
-
-  const toast = () => {
-    success('I love snacks.');
-    success(' snacks.');
-    error('Error snacks.');
-  };
-
   const buscarCapacitaciones = () => {
     setSearch({
       codigoCapacitacion: search.codigoCapacitacion || '',
@@ -83,16 +67,26 @@ const Pagina = () => {
       color: 'primary',
       icon: <EditIcon />,
       label: 'Editar',
-      onClick: (rowData: any) => {
-        // Confirmación antes de redirigir
-        confirm({
+      onClick: async (rowData: any) => {
+        if (!rowData.id) {
+          error('No se puede editar porque falta el ID de la capacitación.');
+          return;
+        }
+
+        const confirmResult = await confirm({
           description: `¿Seguro que deseas editar la capacitación ${rowData.nombreCorto}?`,
-        }).then((result) => {
-          if (result) {
-            // Redirigir a la página de edición
-            navigate(`/capacitaciones/actualizar/${rowData.id}`);
-          }
         });
+
+        if (confirmResult) {
+          try {
+            const response = await httpApi.get(`/api/v1/capacitaciones/${rowData.id}`);
+            console.log('Datos de la capacitación para edición:', response);
+            navigate(`/capacitaciones/actualizar`);
+          } catch (err) {
+            console.error('Error al obtener los datos de la capacitación:', err);
+            error('No se pudo obtener la información de la capacitación para edición.');
+          }
+        }
       },
     },
     {
@@ -124,7 +118,7 @@ const Pagina = () => {
     },
   ];
 
-  const nuevo = () => {
+  const nuevaCapacitacion = () => {
     navigate('/capacitaciones/crear');
   };
 
@@ -133,10 +127,8 @@ const Pagina = () => {
       <MainCard xs={{ maxWidth: '1200px' }}>
         <GroupToolbar>
           <BtnGroup>
-            <Button onClick={() => open()}>Open</Button>
-            <Button onClick={() => toast()}>Toast</Button>
-            <Button onClick={() => buscarCapacitaciones()}>Buscar</Button>
-            <Button onClick={() => nuevo()}>Nuevo</Button>
+            <Button onClick={buscarCapacitaciones}>Buscar</Button>
+            <Button onClick={nuevaCapacitacion}>Crear Capacitacion</Button>
           </BtnGroup>
         </GroupToolbar>
 

@@ -1,95 +1,59 @@
-import {
-  FieldValues,
-  FormProvider,
-  SubmitErrorHandler,
-  useForm,
-  UseFormReturn,
-  ValidationMode,
-} from 'react-hook-form';
-
-import { configHookForm } from './config.ts';
-
+import React from 'react';
+import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { FieldValues, SubmitErrorHandler, UseFormReturn, ValidationMode } from 'react-hook-form';
 
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
 export interface HookFormProps {
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  onSubmit?: Function;
+  onSubmit?: (data: FieldValues, reset: () => void) => void;
   onErrorSubmit?: SubmitErrorHandler<FieldValues>;
   validations?: any;
-  children?: any;
-  initialValues?: any;
+  children: (methods: UseFormReturn) => React.ReactNode;
+  defaultValues?: any; // Usar `defaultValues` directamente
   nameForm?: string;
   validationMode?: keyof ValidationMode;
   isLoading?: boolean;
 }
-export type HookFormMethods = UseFormReturn;
 
-export const LoadingForm = () => {
-  const d = useForm();
-  d.register('$$isLoading');
-  return <></>;
-};
-
-type HookFormSkeletonProps = HookFormProps & { loadingComponente: any };
-export const HookFormSkeleton = (props: HookFormSkeletonProps) => {
-  return <HookFormImpl {...props} />;
-};
-
-export const HookFormImpl = (props: HookFormProps) => {
+export const HookForm: React.FC<HookFormProps> = ({
+                                                    onSubmit,
+                                                    onErrorSubmit,
+                                                    validations,
+                                                    children,
+                                                    defaultValues = {}, // Valores iniciales predeterminados
+                                                    nameForm,
+                                                    validationMode = 'onChange',
+                                                  }) => {
   const methods = useForm({
-    resolver: props.validations ? yupResolver(props.validations) : undefined,
-
-    defaultValues: props.initialValues ? props.initialValues : {},
-    mode: props.validationMode ? props.validationMode : 'onChange',
+    resolver: validations ? yupResolver(validations) : undefined,
+    defaultValues, // Pasar valores iniciales a React Hook Form
+    mode: validationMode,
   });
 
-  const { formState } = methods;
+  const { handleSubmit, formState } = methods;
 
-  const submit = async (data: any) => {
-    //  alert('submit');
-    if (props.onSubmit) {
-      props?.onSubmit(data, methods.reset);
-      await sleep(configHookForm.submitDelay);
+  const submit = async (data: FieldValues) => {
+    if (onSubmit) {
+      await onSubmit(data, methods.reset);
+      await sleep(300); // Simulación de retardo
     }
   };
 
-  const childrenProps: HookFormMethods = {
-    ...methods,
-  };
-
   return (
-    <>
-      <FormProvider {...methods}>
-        <form
-          noValidate
-          autoComplete="off"
-          // layout={'vertical'}
-          id={props.nameForm}
-          onSubmitCapture={
-            formState.isSubmitting
-              ? e => {
-                  e.preventDefault();
-                }
-              : methods.handleSubmit(d => submit(d), props.onErrorSubmit)
-          }
-        >
-          {props.children(childrenProps)}
-        </form>
-      </FormProvider>
-    </>
+    <FormProvider {...methods}>
+      <form
+        id={nameForm}
+        noValidate
+        autoComplete="off"
+        onSubmitCapture={
+          formState.isSubmitting
+            ? (e) => e.preventDefault()
+            : handleSubmit(submit, onErrorSubmit)
+        }
+      >
+        {children(methods)}
+      </form>
+    </FormProvider>
   );
-};
-
-export const HookForm = (props: HookFormProps) => {
-  if (props.isLoading) {
-    return (
-      <HookFormSkeleton
-        {...props}
-        loadingComponente={<LoadingForm />}
-        initialValues={{ $isloading: props.isLoading }}
-      />
-    );
-  }
-  return <HookFormImpl {...props} />;
 };

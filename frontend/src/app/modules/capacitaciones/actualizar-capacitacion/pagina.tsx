@@ -1,82 +1,68 @@
+import { useEffect, useState } from 'react';
 import MainCard from '@common/ui-component/cards/main-card.tsx';
 import { CapacitacionFormulario } from '../common/capacitacion-formulario.tsx';
 import { Row } from '@components/ui-layout/row.tsx';
 import { Col } from '@components/ui-layout/col.tsx';
-import { useEffect,useState} from "react";
-import { useNotification } from '@components/snackbar/use-notification.ts';
-import { actualizarCapacitacion } from './api.ts'; // Llamada para actualizar
 import { Button } from '@components/button/button.tsx';
+import { useNotification } from '@components/snackbar/use-notification.ts';
+import { useParams, useNavigate } from 'react-router-dom';
+import { httpApi } from '../../../http/http-api.ts';
+import { actualizarCapacitacion } from './api.ts';
+import { Capacitacion } from '../common/capacitacion.model.ts';
 
-interface Capacitacion {
-  id: string;
-  codigoCapacitacion: string;
-  nombreCorto: string;
-  nombreLargo: string;
-  descripcion: string;
-  enteCapacitador: string;
-  modalidad: { id: string, name: string };
-  lugar: string;
-  horario: string;
-  fechaInicioRegistro: string;
-  fechaFinRegistro: string;
-  estado: { id: string, name: string };
-}
+const nameForm = 'actualizarCapacitacion';
 
-const nameForm = 'editarCapacitacion';
-
-const Pagina = ({ id }: { id: string }) => {
-  const { success } = useNotification();
-
-  const obtenerDatosCapacitacion = async (id: string): Promise<Capacitacion> => {
-    const response = await fetch(`/api/v1/capacitacion/${id}`);
-    const data = await response.json();
-    return data;
-  };
-
-  const guardar = async (values: any) => {
-    console.log('ACTUALIZAR', values);
-    await actualizarCapacitacion({
-      id,
-      codigoCapacitacion: values.codigoCapacitacion,
-      nombreCorto: values.nombreCorto,
-      nombreLargo: values.nombreLargo,
-      descripcion: values.descripcion,
-      enteCapacitador: values.enteCapacitador,
-      modalidad: values.modalidad.id,
-      lugar: values.lugar,
-      horario: values.horario,
-      fechaInicioRegistro: values.fechaInicioRegistro,
-      fechaFinRegistro: values.fechaFinRegistro,
-      estado: values.estado.id,
-    });
-
-    success('Capacitación actualizada correctamente');
-  };
-
-  const [capacitacion, setCapacitacion] = useState<Capacitacion | null>(null);
+const Pagina = () => {
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const { success, error } = useNotification();
+  const [initialValues, setInitialValues] = useState<Capacitacion | null>(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const data = await obtenerDatosCapacitacion(id);
-      setCapacitacion(data);
-    };
+    // Cargar los datos de la capacitación seleccionada
+    if (id) {
+      httpApi
+        .get<Capacitacion>(` /api/v1/capacitacion/${id}`) // Especifica el tipo de respuesta
+        .then((response) => setInitialValues(response))
+        .catch(() => error('Error al cargar los datos de la capacitación'));
+    }
+  }, [id, error]);
 
-    fetchData();
-  }, [id]);
+  const guardar = async (values: any) => {
+    try {
+      console.log('ACTUALIZAR', values);
 
-  if (!capacitacion) return <div>Cargando...</div>;
+      // Llamada al backend para actualizar la capacitación
+      await actualizarCapacitacion(id!, {
+        ...values,
+        modalidad: values.modalidad.id,
+        estado: values.estado.id,
+      });
+
+      success('Capacitación actualizada correctamente');
+      navigate('/capacitaciones'); // Redirige a la lista de capacitaciones
+    } catch (e: any) {
+      if (e.response?.status === 400) {
+        error(e.response.data?.Error || 'Error al actualizar la capacitación.');
+      } else {
+        error('Ocurrió un error inesperado. Por favor, intente de nuevo más tarde.');
+      }
+    }
+  };
+
+  if (!initialValues) return <div>Cargando...</div>;
 
   return (
     <MainCard xs={{ maxWidth: '1200px' }}>
       <CapacitacionFormulario
-        onSubmit={values => guardar(values)}
+        onSubmit={(values) => guardar(values)}
         nombreFormulario={nameForm}
-        initialValues={capacitacion} // Pasa los valores iniciales al formulario
+        initialValues={initialValues} // Pasar valores iniciales al formulario
       />
       <Row>
         <Col>
           <Button form={nameForm} type="submit">
-            Actualizar
+            Guardar Cambios
           </Button>
         </Col>
       </Row>

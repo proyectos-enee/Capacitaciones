@@ -22,6 +22,7 @@ public class Endpoints:CarterModule
           app.LeerCapacitacion();
           app.ActualizarCapacitacion();
           app.EliminarCapacitacion();
+          //app.VisualizarCapacitacionDisponible();
 
 
 

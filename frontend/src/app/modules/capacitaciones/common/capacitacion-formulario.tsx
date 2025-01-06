@@ -48,9 +48,14 @@ const validations = yup.object({
 interface Props {
   nombreFormulario: string;
   onSubmit: (values: any) => void;
+  initialValues?: any; // Agregar soporte para valores iniciales
 }
 
-export const CapacitacionFormulario = ({ nombreFormulario, onSubmit }: Props) => {
+export const CapacitacionFormulario = ({
+                                         nombreFormulario,
+                                         onSubmit,
+                                         initialValues = {}, // Valores iniciales con predeterminado vacío
+                                       }: Props) => {
   const guardar = (values: any) => {
     onSubmit(values);
   };
@@ -71,13 +76,17 @@ export const CapacitacionFormulario = ({ nombreFormulario, onSubmit }: Props) =>
       nameForm={nombreFormulario}
       onSubmit={guardar}
       validations={validations}
+      defaultValues={initialValues} // Pasar los valores iniciales al formulario
     >
       {() => {
         return (
           <Grid container spacing={3}>
             <Row>
               <Col>
-                <InputText label="Código Capacitación" name="codigoCapacitacion" />
+                <InputText
+                  label="Código Capacitación"
+                  name="codigoCapacitacion"
+                />
               </Col>
               <Col>
                 <InputText label="Nombre Corto" name="nombreCorto" />
@@ -149,5 +158,3 @@ export const CapacitacionFormulario = ({ nombreFormulario, onSubmit }: Props) =>
     </HookForm>
   );
 };
-
-
