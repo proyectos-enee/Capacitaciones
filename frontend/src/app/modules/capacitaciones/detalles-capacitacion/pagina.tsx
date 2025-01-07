@@ -1,70 +1,77 @@
-import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { useNotification } from '@components/snackbar/use-notification.ts';
+import { useState } from 'react';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
 
-const ConsultarCapacitacion = () => {
-  const { id } = useParams<{ id: string }>();  // Obtener el 'id' de la URL
-  const [capacitacion, setCapacitacion] = useState<any | null>(null);
-  const { error } = useNotification();
+import { PaginableGrid } from '@components/grid/paginable-grid.tsx';
 
-  useEffect(() => {
-    const fetchCapacitacion = async () => {
-      try {
-        const response = await fetch(`http://localhost:5090/api/v1/capacitacion/${id}`);
-        if (!response.ok) {
-          throw new Error('Capacitación no encontrada');
-        }
-        const data = await response.json();
-        setCapacitacion(data);
-      } catch (err) {
-        error('Error al cargar la capacitación');
-        console.error(err);
-      }
-    };
+import InfoIcon from '@mui/icons-material/Info';
+import { ActionColumn, generateActionColumn } from '@components/grid/components/action-column.tsx';
 
-    fetchCapacitacion();
-  }, [id, error]);
+const Pagina = () => {
+  const [openDialog, setOpenDialog] = useState(false);
+  const [selectedCapacitacion, setSelectedCapacitacion] = useState<any>(null);
 
-  if (!capacitacion) return <div>Cargando...</div>;
+  const actions: Array<ActionColumn> = [
+    // Otras acciones...
+    {
+      color: 'secondary',
+      icon: <InfoIcon />,
+      label: 'Ver Detalles',
+      onClick: (rowData: any) => {
+        setSelectedCapacitacion(rowData); // Guarda los datos de la capacitación seleccionada
+        setOpenDialog(true); // Abre el diálogo
+      },
+    },
+  ];
 
   return (
-    <div>
-      <h1>Detalles de la Capacitación</h1>
-      <div>
-        <strong>Código Capacitación:</strong> {capacitacion.codigoCapacitacion}
-      </div>
-      <div>
-        <strong>Nombre Corto:</strong> {capacitacion.nombreCorto}
-      </div>
-      <div>
-        <strong>Nombre Largo:</strong> {capacitacion.nombreLargo}
-      </div>
-      <div>
-        <strong>Descripción:</strong> {capacitacion.descripcion}
-      </div>
-      <div>
-        <strong>Ente Capacitador:</strong> {capacitacion.enteCapacitador}
-      </div>
-      <div>
-        <strong>Modalidad:</strong> {capacitacion.modalidad}
-      </div>
-      <div>
-        <strong>Lugar:</strong> {capacitacion.lugar}
-      </div>
-      <div>
-        <strong>Horario:</strong> {capacitacion.horario}
-      </div>
-      <div>
-        <strong>Fecha Inicio Registro:</strong> {capacitacion.fechaInicioRegistro}
-      </div>
-      <div>
-        <strong>Fecha Fin Registro:</strong> {capacitacion.fechaFinRegistro}
-      </div>
-      <div>
-        <strong>Estado:</strong> {capacitacion.estado}
-      </div>
-    </div>
+    <>
+      <PaginableGrid
+        columnDefs={[
+          {
+            headerName: 'Acciones',
+            renderCell: generateActionColumn(actions),
+          },
+          {
+            headerName: 'Código Capacitación',
+            field: 'codigoCapacitacion',
+          },
+          {
+            headerName: 'Nombre Corto',
+            field: 'nombreCorto',
+          },
+          {
+            headerName: 'Estado',
+            field: 'estado',
+          },
+        ]}
+      />
+
+      {/* Diálogo de Detalles */}
+      <Dialog open={openDialog} onClose={() => setOpenDialog(false)} maxWidth="sm" fullWidth>
+        <DialogTitle>Detalles de la Capacitación</DialogTitle>
+        <DialogContent>
+          {selectedCapacitacion && (
+            <div>
+              <p><strong>Código:</strong> {selectedCapacitacion.codigoCapacitacion}</p>
+              <p><strong>Nombre Corto:</strong> {selectedCapacitacion.nombreCorto}</p>
+              <p><strong>Nombre Largo:</strong> {selectedCapacitacion.nombreLargo || 'N/A'}</p>
+              <p><strong>Descripción:</strong> {selectedCapacitacion.descripcion || 'N/A'}</p>
+              <p><strong>Estado:</strong> {selectedCapacitacion.estado}</p>
+              <p><strong>Modalidad:</strong> {selectedCapacitacion.modalidad?.name || 'N/A'}</p>
+              <p><strong>Fecha de Inicio:</strong> {selectedCapacitacion.fechaInicioRegistro}</p>
+              <p><strong>Fecha de Fin:</strong> {selectedCapacitacion.fechaFinRegistro}</p>
+              <p><strong>Lugar:</strong> {selectedCapacitacion.lugar || 'N/A'}</p>
+            </div>
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpenDialog(false)} color="primary">
+            Cerrar
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
   );
 };
 
-export default ConsultarCapacitacion;
+export default Pagina;

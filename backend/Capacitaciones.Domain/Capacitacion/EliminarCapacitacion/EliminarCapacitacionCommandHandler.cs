@@ -15,7 +15,7 @@ public class EliminarCapacitacionCommandHandler:ICommandHandler<EliminarCapacita
     {
         var capacitacion = await Repository.Find(command.Id).ConfigureAwait(false);
         capacitacion.Eliminar();
-        await Repository.Update(capacitacion).ConfigureAwait(false);//esto que hace , llama a cargar tu tabla nuevamente?
+        await Repository.ForceDelete(capacitacion).ConfigureAwait(false);
 
 
     }

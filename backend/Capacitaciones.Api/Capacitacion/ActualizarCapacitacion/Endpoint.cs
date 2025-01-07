@@ -8,7 +8,7 @@ public static class Endpoint
 {
     public static void ActualizarCapacitacion(this IEndpointRouteBuilder app)
     {
-        app.MapPut("/{id:guid}", async (Guid id, ActualizarCapacitacionRequest request, IDispatcher dispatcher) =>
+        app.MapPut("/{id}", async (Guid id, ActualizarCapacitacionRequest request, IDispatcher dispatcher) =>
         {
             try
             {

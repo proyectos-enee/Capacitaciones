@@ -6,6 +6,7 @@ import DetalleCapacitacion from './detalles-capacitacion';
 import ActualizarCapacitacion from './actualizar-capacitacion';
 
 
+
 const CapacitacionesRouting = () => {
   return (
     <>

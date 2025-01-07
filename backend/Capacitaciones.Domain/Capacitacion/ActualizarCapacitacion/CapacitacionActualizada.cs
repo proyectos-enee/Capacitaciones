@@ -4,7 +4,7 @@ namespace Capacitaciones.Domain.Capacitacion.ActualizarCapacitacion;
 
 public class CapacitacionActualizada : DomainEvent<Guid>
 {
-    public string CodigoCapacitacion { get; }
+
     public string NombreCorto { get; }
     public string NombreLargo { get; }
     public string? Descripcion { get; }
@@ -19,7 +19,6 @@ public class CapacitacionActualizada : DomainEvent<Guid>
     // Constructor con todos los parámetros necesarios para la actualización
     public CapacitacionActualizada(
         Guid aggregateId,
-        string codigoCapacitacion,
         string nombreCorto,
         string nombreLargo,
         string? descripcion,
@@ -32,7 +31,7 @@ public class CapacitacionActualizada : DomainEvent<Guid>
         string estado
     ) : base(aggregateId)
     {
-        CodigoCapacitacion = codigoCapacitacion;
+
         NombreCorto = nombreCorto;
         NombreLargo = nombreLargo;
         Descripcion = descripcion;
