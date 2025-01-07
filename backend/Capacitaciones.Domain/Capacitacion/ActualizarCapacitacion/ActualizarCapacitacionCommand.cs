@@ -4,7 +4,6 @@ namespace Capacitaciones.Domain.Capacitacion.ActualizarCapacitacion;
 
 public record ActualizarCapacitacionCommand(
     Guid Id,
-    string CodigoCapacitacion,
     string NombreCorto,
     string NombreLargo,
     string? Descripcion,

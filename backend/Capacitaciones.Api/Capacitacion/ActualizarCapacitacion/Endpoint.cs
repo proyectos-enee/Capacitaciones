@@ -15,7 +15,6 @@ public static class Endpoint
                 // Despachar el comando para actualizar la capacitación
                 var result = await dispatcher.Dispatch(new ActualizarCapacitacionCommand(
                     id,
-                    CodigoCapacitacion: request.CodigoCapacitacion,
                     NombreCorto: request.NombreCorto,
                     NombreLargo: request.NombreLargo,
                     Descripcion: request.Descripcion,

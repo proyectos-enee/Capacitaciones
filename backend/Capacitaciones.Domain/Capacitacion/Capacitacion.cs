@@ -46,17 +46,17 @@ public class Capacitacion : AggregateRoot<Guid>
 
     // Propiedades del agregado
     public override Guid Id { get; set; }
-    public string CodigoCapacitacion { get; private set; }
-    public string NombreCorto { get; private set; }
-    public string NombreLargo { get; private set; }
-    public string? Descripcion { get; private set; }
-    public string EnteCapacitador { get; private set; }
-    public string Modalidad { get; private set; }
-    public string? Lugar { get; private set; }
-    public string? Horario { get; private set; }
-    public DateTime FechaInicioRegistro { get; private set; }
-    public DateTime FechaFinRegistro { get; private set; }
-    public string Estado { get; private set; }
+    public string CodigoCapacitacion { get; set; }
+    public string NombreCorto { get; set; }
+    public string NombreLargo { get; set; }
+    public string? Descripcion { get; set; }
+    public string EnteCapacitador { get; set; }
+    public string Modalidad { get; set; }
+    public string? Lugar { get; set; }
+    public string? Horario { get; set; }
+    public DateTime FechaInicioRegistro { get; set; }
+    public DateTime FechaFinRegistro { get; set; }
+    public string Estado { get; set; }
 
     // Método para eliminar la capacitación
     public void Eliminar()

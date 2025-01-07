@@ -11,7 +11,6 @@ import { Row } from '@components/ui-layout/row.tsx';
 import { Col } from '@components/ui-layout/col.tsx';
 
 const validations = yup.object({
-  codigoCapacitacion: yup.string().required('Campo requerido'),
   nombreCorto: yup.string().required('Campo requerido'),
   nombreLargo: yup.string().required('Campo requerido'),
   descripcion: yup.string().required('Campo requerido'),
@@ -83,19 +82,13 @@ export const CapacitacionFormulario = ({
           <Grid container spacing={3}>
             <Row>
               <Col>
-                <InputText
-                  label="Código Capacitación"
-                  name="codigoCapacitacion"
-                />
-              </Col>
-              <Col>
                 <InputText label="Nombre Corto" name="nombreCorto" />
               </Col>
-            </Row>
-            <Row>
               <Col>
                 <InputText label="Nombre Largo" name="nombreLargo" />
               </Col>
+            </Row>
+            <Row>
               <Col>
                 <InputText
                   label="Descripción"
@@ -104,11 +97,11 @@ export const CapacitacionFormulario = ({
                   rows={3}
                 />
               </Col>
-            </Row>
-            <Row>
               <Col>
                 <InputText label="Ente Capacitador" name="enteCapacitador" />
               </Col>
+            </Row>
+            <Row>
               <Col>
                 <ComboBox
                   label="Modalidad"
@@ -117,16 +110,14 @@ export const CapacitacionFormulario = ({
                   placeholder="Seleccione modalidad"
                 />
               </Col>
-            </Row>
-            <Row>
               <Col>
                 <InputText label="Lugar" name="lugar" />
               </Col>
+            </Row>
+            <Row>
               <Col>
                 <TimePickerComponent label="Horario" name="horario" />
               </Col>
-            </Row>
-            <Row>
               <Col>
                 <DatePicker
                   label="Fecha Inicio Registro"
@@ -134,6 +125,8 @@ export const CapacitacionFormulario = ({
                   placeholder="Seleccione fecha de inicio"
                 />
               </Col>
+            </Row>
+            <Row>
               <Col>
                 <DatePicker
                   label="Fecha Fin Registro"
@@ -141,8 +134,6 @@ export const CapacitacionFormulario = ({
                   placeholder="Seleccione fecha de fin"
                 />
               </Col>
-            </Row>
-            <Row>
               <Col>
                 <ComboBox
                   label="Estado"

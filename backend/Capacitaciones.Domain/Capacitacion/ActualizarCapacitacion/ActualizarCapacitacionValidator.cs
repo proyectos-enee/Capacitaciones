@@ -8,7 +8,6 @@ public class ActualizarCapacitacionValidator : CommandValidatorBase<ActualizarCa
     public ActualizarCapacitacionValidator()
     {
         RuleFor(x => x.Id).NotEmpty().NotNull();
-        RuleFor(x => x.CodigoCapacitacion).NotEmpty().NotNull();
         RuleFor(x => x.NombreCorto).NotEmpty().NotNull();
         RuleFor(x => x.NombreLargo).NotEmpty().NotNull();
         RuleFor(x => x.Descripcion).NotEmpty().NotNull();
