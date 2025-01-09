@@ -1,4 +1,4 @@
-﻿using Enee.Core.Domain;
+﻿﻿using Enee.Core.Domain;
 using Capacitaciones.Domain.Capacitacion.CrearCapacitacion;
 using Capacitaciones.Domain.Capacitacion.EliminarCapacitacion;
 using Capacitaciones.Domain.Capacitacion.ActualizarCapacitacion;
@@ -81,7 +81,32 @@ public class Capacitacion : AggregateRoot<Guid>
         Estado = @event.Estado;
         Version++;
     }
+    public void Actualizar(
+        string nombreCorto,
+        string nombreLargo,
+        string descripcion,
+        string enteCapacitador,
+        string modalidad,
+        string? lugar,
+        string? horario,
+        DateTime fechaInicioRegistro,
+        DateTime fechaFinRegistro,
+        string estado)
+    {
+        NombreCorto = nombreCorto;
+        NombreLargo = nombreLargo;
+        Descripcion = descripcion;
+        EnteCapacitador = enteCapacitador;
+        Modalidad = modalidad;
+        Lugar = lugar;
+        Horario = horario;
+        FechaInicioRegistro = fechaInicioRegistro;
+        FechaFinRegistro = fechaFinRegistro;
+        Estado = estado;
 
+        // Incrementar versión u otras operaciones si es necesario
+        Version++;
+    }
     private void Apply(CapacitacionEliminada @event)
     {
         // Aquí puedes manejar cualquier lógica adicional cuando se elimina una capacitación,
@@ -89,4 +114,3 @@ public class Capacitacion : AggregateRoot<Guid>
         Version++;
     }
 }
-

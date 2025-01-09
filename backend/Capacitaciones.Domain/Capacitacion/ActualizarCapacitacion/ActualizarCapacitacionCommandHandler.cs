@@ -1,7 +1,6 @@
 ﻿using Enee.Core.CQRS.Command;
 using Enee.Core.Domain.Repository;
 
-
 namespace Capacitaciones.Domain.Capacitacion.ActualizarCapacitacion;
 
 public class ActualizarCapacitacionCommandHandler : ICommandHandler<ActualizarCapacitacionCommand>
@@ -15,27 +14,26 @@ public class ActualizarCapacitacionCommandHandler : ICommandHandler<ActualizarCa
 
     public async Task Handle(ActualizarCapacitacionCommand command)
     {
-        // Buscar la capacitación existente
-        var entity = await Repository.Find(command.Id);
-        if (entity == null)
+        var capacitacion = await Repository.Find(command.Id);
+        if (capacitacion == null)
         {
-            throw new InvalidOperationException("No se encontró la capacitación para actualizar.");
+            throw new Exception($"La capacitacion con Id {command.Id} no existe.");
         }
 
-        // Actualizar los valores de la entidad con los datos del comando
+        // Actualizar la entidad
+        capacitacion.Actualizar(
+            command.NombreCorto,
+            command.NombreLargo,
+            command.Descripcion,
+            command.EnteCapacitador,
+            command.Modalidad,
+            command.Lugar,
+            command.Horario,
+            command.FechaInicioRegistro,
+            command.FechaFinRegistro,
+            command.Estado);
 
-        entity.NombreCorto = command.NombreCorto;
-        entity.NombreLargo = command.NombreLargo;
-        entity.Descripcion = command.Descripcion;
-        entity.EnteCapacitador = command.EnteCapacitador;
-        entity.Modalidad = command.Modalidad;
-        entity.Lugar = command.Lugar;
-        entity.Horario = command.Horario;
-        entity.FechaInicioRegistro = command.FechaInicioRegistro;
-        entity.FechaFinRegistro = command.FechaFinRegistro;
-        entity.Estado = command.Estado;
 
-        // Guardar los cambios en el repositorio
-        await Repository.Update(entity);
+        await Repository.Update(capacitacion);
     }
 }
