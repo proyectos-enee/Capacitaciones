@@ -15,7 +15,7 @@ public class EliminarCapacitacionCommandHandler:ICommandHandler<EliminarCapacita
     {
         var capacitacion = await Repository.Find(command.Id).ConfigureAwait(false);
         capacitacion.Eliminar();
-        await Repository.ForceDelete(capacitacion).ConfigureAwait(false);
+        await Repository.Update(capacitacion).ConfigureAwait(false);
 
 
     }

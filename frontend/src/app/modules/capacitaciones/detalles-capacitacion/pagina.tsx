@@ -1,17 +1,15 @@
 import { useState } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
-
 import { PaginableGrid } from '@components/grid/paginable-grid.tsx';
-
 import InfoIcon from '@mui/icons-material/Info';
 import { ActionColumn, generateActionColumn } from '@components/grid/components/action-column.tsx';
+import { modalidades } from '../common/capacitacion-formulario'; // Importar modalidades
 
 const Pagina = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedCapacitacion, setSelectedCapacitacion] = useState<any>(null);
 
   const actions: Array<ActionColumn> = [
-    // Otras acciones...
     {
       color: 'secondary',
       icon: <InfoIcon />,
@@ -46,7 +44,6 @@ const Pagina = () => {
         ]}
       />
 
-      {/* Diálogo de Detalles */}
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)} maxWidth="sm" fullWidth>
         <DialogTitle>Detalles de la Capacitación</DialogTitle>
         <DialogContent>
@@ -57,7 +54,9 @@ const Pagina = () => {
               <p><strong>Nombre Largo:</strong> {selectedCapacitacion.nombreLargo || 'N/A'}</p>
               <p><strong>Descripción:</strong> {selectedCapacitacion.descripcion || 'N/A'}</p>
               <p><strong>Estado:</strong> {selectedCapacitacion.estado}</p>
-              <p><strong>Modalidad:</strong> {selectedCapacitacion.modalidad?.name || 'N/A'}</p>
+              <p><strong>Modalidad:</strong>
+                {modalidades.find((m) => m.id === selectedCapacitacion.modalidad)?.name || 'N/A'}
+              </p>
               <p><strong>Fecha de Inicio:</strong> {selectedCapacitacion.fechaInicioRegistro}</p>
               <p><strong>Fecha de Fin:</strong> {selectedCapacitacion.fechaFinRegistro}</p>
               <p><strong>Lugar:</strong> {selectedCapacitacion.lugar || 'N/A'}</p>

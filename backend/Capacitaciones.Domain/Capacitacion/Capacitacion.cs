@@ -2,7 +2,7 @@
 using Capacitaciones.Domain.Capacitacion.CrearCapacitacion;
 using Capacitaciones.Domain.Capacitacion.EliminarCapacitacion;
 using Capacitaciones.Domain.Capacitacion.ActualizarCapacitacion;
-using Capacitaciones.Domain.Capacitacion.LeerCapacitacion;
+using Capacitaciones.Domain.Capacitacion.ObtenerCapacitacionesDisponibles;
 
 namespace Capacitaciones.Domain.Capacitacion;
 
@@ -57,11 +57,38 @@ public class Capacitacion : AggregateRoot<Guid>
     public DateTime FechaInicioRegistro { get; set; }
     public DateTime FechaFinRegistro { get; set; }
     public string Estado { get; set; }
+    public bool IsDeleted { get; private set; } // Nueva propiedad
 
     // Método para eliminar la capacitación
     public void Eliminar()
     {
+        IsDeleted = true; // Marcar como eliminado
         Apply(NewChange(new CapacitacionEliminada(Id)));
+    }
+
+    // Método para comparar datos
+    public bool EsIgual(
+        string nombreCorto,
+        string nombreLargo,
+        string descripcion,
+        string enteCapacitador,
+        string modalidad,
+        string? lugar,
+        string? horario,
+        DateTime fechaInicioRegistro,
+        DateTime fechaFinRegistro,
+        string estado)
+    {
+        return this.NombreCorto == nombreCorto &&
+               this.NombreLargo == nombreLargo &&
+               this.Descripcion == descripcion &&
+               this.EnteCapacitador == enteCapacitador &&
+               this.Modalidad == modalidad &&
+               this.Lugar == lugar &&
+               this.Horario == horario &&
+               this.FechaInicioRegistro == fechaInicioRegistro &&
+               this.FechaFinRegistro == fechaFinRegistro &&
+               this.Estado == estado;
     }
 
     // Métodos para aplicar eventos de dominio
@@ -81,6 +108,7 @@ public class Capacitacion : AggregateRoot<Guid>
         Estado = @event.Estado;
         Version++;
     }
+
     public void Actualizar(
         string nombreCorto,
         string nombreLargo,
@@ -107,6 +135,7 @@ public class Capacitacion : AggregateRoot<Guid>
         // Incrementar versión u otras operaciones si es necesario
         Version++;
     }
+
     private void Apply(CapacitacionEliminada @event)
     {
         // Aquí puedes manejar cualquier lógica adicional cuando se elimina una capacitación,

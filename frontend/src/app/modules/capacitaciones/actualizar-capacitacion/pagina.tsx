@@ -1,84 +1,76 @@
-import { useParams } from 'react-router';
+import { useLocation, useNavigate, useParams } from 'react-router';
 import { useEffect, useState } from 'react';
-import { useNotification } from '@components/snackbar/use-notification.ts';
-import { httpApi } from '../../../http/http-api.ts';
 import MainCard from '@common/ui-component/cards/main-card.tsx';
 import { CapacitacionFormulario } from '../common/capacitacion-formulario.tsx';
-import { actualizarCapacitacion } from './api.ts'; // Función para actualizar la capacitación
+import { useNotification } from '@components/snackbar/use-notification.ts';
+import { actualizarCapacitacion } from './api.ts';
+import { Button } from '@components/button/button.tsx';
 
-const Pagina = () => {
-  const { id } = useParams<{ id: string }>(); // Obtener el ID de la URL
+const PaginaActualizar = () => {
+  const { id } = useParams<{ id: string }>(); // Parámetro dinámico desde la URL
+  const location = useLocation(); // Para manejar el estado pasado
+  const navigate = useNavigate();
   const { success, error } = useNotification();
-  const [capacitacion, setCapacitacion] = useState<any>(null); // Datos de la capacitación
-  const [loading, setLoading] = useState(true); // Estado de carga
+  const [capacitacion, setCapacitacion] = useState<any | null>(null);
 
   useEffect(() => {
-    const cargarCapacitacion = async () => {
-      try {
-        if (!id) {
-          error('No se proporcionó un ID válido.');
-          return;
+    // Verificar si hay datos en el estado
+    if (location.state && location.state.capacitacion) {
+      setCapacitacion(location.state.capacitacion);
+    } else if (id) {
+      // Si no hay datos en el estado, se puede cargar desde la API
+      const cargarCapacitacion = async () => {
+        try {
+          const response = await fetch(`http://localhost:5090/api/v1/capacitacion/${id}`);
+          if (!response.ok) throw new Error('Error al cargar la capacitación.');
+          const data = await response.json();
+          setCapacitacion(data);
+        } catch (err) {
+          error('Error al cargar la capacitación.');
+          navigate('/capacitaciones'); // Redirigir si no se puede cargar
         }
+      };
 
-        // Llama a la API para obtener los datos de la capacitación
-        const response = await httpApi.get(`/capacitacion/${id}`);
-        setCapacitacion(response.data ); // Guarda los datos en el estado
-      } catch (err) {
-        console.error('Error al cargar los datos:', err);
-        error('No se pudo cargar la información de la capacitación.');
-      } finally {
-        setLoading(false); // Detiene el estado de carga
-      }
-    };
-
-    cargarCapacitacion();
-  }, [id]);
+      cargarCapacitacion();
+    } else {
+      error('No se encontró la capacitación.');
+      navigate('/capacitaciones'); // Redirigir si no hay ID
+    }
+  }, [id, location.state, error, navigate]);
 
   const guardar = async (values: any) => {
     try {
-      // Llama a la API para actualizar la capacitación
       await actualizarCapacitacion(id!, values);
       success('Capacitación actualizada correctamente');
+      navigate('/capacitaciones'); // Redirigir después de la actualización
     } catch (err) {
-      console.error('Error al actualizar la capacitación:', err);
-      error('No se pudo actualizar la capacitación.');
+      error('Error al actualizar la capacitación.');
     }
   };
 
-  if (loading) {
-    return <p>Cargando datos de la capacitación...</p>;
-  }
+  const regresar = () => {
+    navigate('/capacitaciones'); // Redirige al listado principal
+  };
 
-  if (!capacitacion) {
-    return <p>No se encontraron datos para esta capacitación.</p>;
-  }
+  if (!capacitacion) return <p>Cargando...</p>;
 
   return (
     <MainCard xs={{ maxWidth: '1200px' }}>
       <CapacitacionFormulario
         onSubmit={guardar}
-        nombreFormulario="editarCapacitacion"
-        initialValues={{
-          nombreCorto: capacitacion.nombreCorto || '',
-          nombreLargo: capacitacion.nombreLargo || '',
-          descripcion: capacitacion.descripcion || '',
-          enteCapacitador: capacitacion.enteCapacitador || '',
-          modalidad: {
-            id: capacitacion.modalidad?.id || '',
-            name: capacitacion.modalidad?.name || '',
-          },
-          lugar: capacitacion.lugar || '',
-          horario: capacitacion.horario || '',
-          fechaInicioRegistro: capacitacion.fechaInicioRegistro || '',
-          fechaFinRegistro: capacitacion.fechaFinRegistro || '',
-          estado: {
-            id: capacitacion.estado?.id || '',
-            name: capacitacion.estado?.name || '',
-          },
-        }}
+        initialValues={capacitacion}
+        nombreFormulario="actualizarCapacitacion"
       />
+      <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
+        <Button type="submit" form="actualizarCapacitacion" color="primary">
+          Actualizar
+        </Button>
+        <Button onClick={regresar} color="secondary">
+          Regresar
+        </Button>
+      </div>
     </MainCard>
   );
 };
 
-export default Pagina;
+export default PaginaActualizar;

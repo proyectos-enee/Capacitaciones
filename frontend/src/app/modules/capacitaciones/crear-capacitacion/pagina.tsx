@@ -10,40 +10,28 @@ import { Button } from '@components/button/button.tsx';
 const nameForm = 'cualquierCosa';
 
 const Pagina = () => {
-  const { success, error } = useNotification(); // Agrega `error` para mostrar notificaciones de error
+  const { success } = useNotification();
 
   const guardar = async (values: any) => {
-    try {
-      console.log('INSERTAR', values);
+    console.log('INSERTAR', values);
 
-      // Llamada al backend para crear la capacitación
-      await crearCapacitacion({
-        id: '3ed540e2-4c9b-4228-a99f-a8a6c5d695d7',
-        codigoCapacitacion: values.codigoCapacitacion,
-        nombreCorto: values.nombreCorto,
-        nombreLargo: values.nombreLargo,
-        descripcion: values.descripcion,
-        enteCapacitador: values.enteCapacitador,
-        modalidad: values.modalidad.id,
-        lugar: values.lugar,
-        horario: values.horario,
-        fechaInicioRegistro: values.fechaInicioRegistro,
-        fechaFinRegistro: values.fechaFinRegistro,
-        estado: values.estado.id,
-      });
+    // Aquí es donde se llaman los datos para crear la capacitación.
+    await crearCapacitacion({
+      id: '3ed540e2-4c9b-4228-a99f-a8a6c5d695d7',
+      codigoCapacitacion: values.codigoCapacitacion,
+      nombreCorto: values.nombreCorto,
+      nombreLargo: values.nombreLargo,
+      descripcion: values.descripcion,
+      enteCapacitador: values.enteCapacitador,
+      modalidad: values.modalidad.id,
+      lugar: values.lugar,
+      horario: values.horario,
+      fechaInicioRegistro: values.fechaInicioRegistro,
+      fechaFinRegistro: values.fechaFinRegistro,
+      estado: values.estado.id,
+    });
 
-      // Notificación de éxito
-      success('Capacitación guardada correctamente');
-    } catch (e: any) {
-      // Manejo de errores
-      if (e.response?.status === 400) {
-        // Error específico del código de capacitación no único
-        error(e.response.data?.Error || 'Error al guardar la capacitación.');
-      } else {
-        // Error genérico
-        error('Ocurrió un error inesperado. Por favor, intente de nuevo más tarde.');
-      }
-    }
+    success('Capacitación guardada correctamente');
   };
 
   return (

@@ -30,6 +30,7 @@ public static class ConfigureApplication
         //Transaccionalidad
         app.UseMiddleware<UnitOfWorkMiddleware>();
 
+
         // Usa la autenticación y autorización
         app.UseCors("default");
         app.UseAuthentication();

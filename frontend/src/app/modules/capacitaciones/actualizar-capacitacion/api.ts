@@ -1,5 +1,24 @@
 import { httpApi } from '../../../http/http-api.ts';
 
-export const actualizarCapacitacion = async (id: string, data: any) => {
-  return httpApi.put(`/capacitacion/${id}`, data);
+// Definición del modelo de Capacitación
+export interface Capacitacion {
+  id: string;
+  codigoCapacitacion: string;
+  nombreCorto: string;
+  nombreLargo: string;
+  descripcion: string;
+  enteCapacitador: string;
+  modalidad: string;
+  lugar: string;
+  horario: string;
+  fechaInicioRegistro: string;
+  fechaFinRegistro: string;
+  estado: string;
+}
+
+
+// Actualizar una capacitación existente por ID
+export const actualizarCapacitacion = async (id: string, values: Capacitacion) => {
+  return httpApi.put(`/api/v1/capacitacion/${id}`, values);
 };
+

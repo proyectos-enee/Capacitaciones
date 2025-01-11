@@ -9,6 +9,7 @@ import MainCard from '@common/ui-component/cards/main-card.tsx';
 import { ColumnDef } from '@components/grid/models/column-def.tsx';
 import { ActionColumn, generateActionColumn } from '@components/grid/components/action-column.tsx';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { modalidades } from '../common/capacitacion-formulario';
 import EditIcon from '@mui/icons-material/Edit';
 import InfoIcon from '@mui/icons-material/Info';
 import { Button } from '@components/button/button.tsx';
@@ -21,7 +22,7 @@ const Pagina = () => {
   const confirm = useConfirmDialog();
   const { success, error } = useNotification();
   const [search, setSearch] = useState<any>({});
-  const [openDialog, setOpenDialog] = useState(false); // Control del diálogo
+  const [openDialog, setOpenDialog] = useState(false); // Control del diálogo de "Ver Detalles"
   const [selectedCapacitacion, setSelectedCapacitacion] = useState<any>(null); // Capacitación seleccionada
 
   // Configuración para paginar
@@ -37,6 +38,7 @@ const Pagina = () => {
       nombreCorto: search.nombreCorto || '',
     });
   };
+
 
   const actions: Array<ActionColumn> = [
     {
@@ -65,10 +67,12 @@ const Pagina = () => {
     },
     {
       color: 'primary',
-      icon: <EditIcon />,
+      icon: <EditIcon />, // Ícono para editar
       label: 'Editar',
       onClick: (rowData: any) => {
-        navigate(`/capacitaciones/actualizar/${rowData.id}`);
+        navigate(`/capacitaciones/actualizar/${rowData.id}`, {
+          state: { capacitacion: rowData }, // Pasa los datos de la capacitación seleccionada como estado
+        });
       },
     },
     {
@@ -76,8 +80,9 @@ const Pagina = () => {
       icon: <InfoIcon />,
       label: 'Ver Detalles',
       onClick: (rowData: any) => {
-        setSelectedCapacitacion(rowData); // Almacena los datos de la capacitación
-        setOpenDialog(true); // Abre el diálogo
+        // Abre el cuadro de diálogo para mostrar los detalles
+        setSelectedCapacitacion(rowData);
+        setOpenDialog(true);
       },
     },
   ];
@@ -116,55 +121,104 @@ const Pagina = () => {
         </GroupToolbar>
 
         {/* Formulario de Búsqueda */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            marginTop: '20px',
+          }}
+        >
           <div style={{ display: 'flex', gap: '10px' }}>
             <input
               type="text"
               placeholder="Código de Capacitación"
               value={search.codigoCapacitacion || ''}
-              onChange={(e) => setSearch({ ...search, codigoCapacitacion: e.target.value })}
+              onChange={e =>
+                setSearch({ ...search, codigoCapacitacion: e.target.value })
+              }
               style={{ padding: '5px', width: '200px' }}
             />
             <input
               type="text"
               placeholder="Nombre Corto"
               value={search.nombreCorto || ''}
-              onChange={(e) => setSearch({ ...search, nombreCorto: e.target.value })}
+              onChange={e =>
+                setSearch({ ...search, nombreCorto: e.target.value })
+              }
               style={{ padding: '5px', width: '200px' }}
             />
             <Button onClick={buscarCapacitaciones}>Buscar</Button>
           </div>
         </div>
 
-        <PaginableGrid paginable={data as PaginateResult<any>} columnDefs={columns} />
+        <PaginableGrid
+          paginable={data as PaginateResult<any>}
+          columnDefs={columns}
+        />
       </MainCard>
 
       {/* Diálogo de Detalles */}
-      <Dialog open={openDialog} onClose={() => setOpenDialog(false)} maxWidth="sm" fullWidth>
+      <Dialog
+        open={openDialog}
+        onClose={() => setOpenDialog(false)}
+        maxWidth="sm"
+        fullWidth
+      >
         <DialogTitle>Detalles de la Capacitación</DialogTitle>
         <DialogContent>
           {selectedCapacitacion && (
             <div>
-              <p><strong>Id:</strong> {selectedCapacitacion.id}</p>
-              <p><strong>Código:</strong> {selectedCapacitacion.codigoCapacitacion}</p>
-              <p><strong>Nombre Corto:</strong> {selectedCapacitacion.nombreCorto}</p>
-              <p><strong>Nombre Largo:</strong> {selectedCapacitacion.nombreLargo || 'N/A'}</p>
-              <p><strong>Descripción:</strong> {selectedCapacitacion.descripcion || 'N/A'}</p>
-              <p><strong>Estado:</strong> {selectedCapacitacion.estado}</p>
-              <p><strong>Modalidad:</strong>{' '} {selectedCapacitacion.modalidad?.name || 'N/A'}</p>
+              <p>
+                <strong>Id:</strong> {selectedCapacitacion.id}
+              </p>
+              <p>
+                <strong>Código:</strong>{' '}
+                {selectedCapacitacion.codigoCapacitacion}
+              </p>
+              <p>
+                <strong>Horario:</strong>{' '}
+                {selectedCapacitacion.horario || 'N/A'}
+              </p>
+              <p>
+                <strong>Nombre Corto:</strong>{' '}
+                {selectedCapacitacion.nombreCorto}
+              </p>
+              <p>
+                <strong>Nombre Largo:</strong>{' '}
+                {selectedCapacitacion.nombreLargo || 'N/A'}
+              </p>
+              <p>
+                <strong>Descripción:</strong>{' '}
+                {selectedCapacitacion.descripcion || 'N/A'}
+              </p>
+              <p>
+                <strong>Estado:</strong> {selectedCapacitacion.estado}
+              </p>
+              <p>
+                <strong>Modalidad:</strong>
+                {modalidades.find(m => m.id === selectedCapacitacion.modalidad)
+                  ?.name || 'N/A'}
+              </p>
+
               <p>
                 <strong>Fecha de Inicio:</strong>{' '}
                 {selectedCapacitacion.fechaInicioRegistro
-                  ? new Date(selectedCapacitacion.fechaInicioRegistro).toLocaleDateString()
+                  ? new Date(
+                      selectedCapacitacion.fechaInicioRegistro,
+                    ).toLocaleDateString()
                   : 'N/A'}
               </p>
               <p>
                 <strong>Fecha de Fin:</strong>{' '}
                 {selectedCapacitacion.fechaFinRegistro
-                  ? new Date(selectedCapacitacion.fechaFinRegistro).toLocaleDateString()
+                  ? new Date(
+                      selectedCapacitacion.fechaFinRegistro,
+                    ).toLocaleDateString()
                   : 'N/A'}
               </p>
-              <p><strong>Lugar:</strong> {selectedCapacitacion.lugar || 'N/A'}</p>
+              <p>
+                <strong>Lugar:</strong> {selectedCapacitacion.lugar || 'N/A'}
+              </p>
             </div>
           )}
         </DialogContent>

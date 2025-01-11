@@ -9,6 +9,11 @@ import * as yup from 'yup';
 import TimePickerComponent from '@components/form/date-time/time-picker';
 import { Row } from '@components/ui-layout/row.tsx';
 import { Col } from '@components/ui-layout/col.tsx';
+export const modalidades = [
+  { name: 'Virtual', id: 'virtual' },
+  { name: 'Presencial', id: 'presencial' },
+  { name: 'Híbrido', id: 'hibrido' },
+];
 
 const validations = yup.object({
   nombreCorto: yup.string().required('Campo requerido'),

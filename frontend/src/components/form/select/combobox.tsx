@@ -21,24 +21,25 @@ interface Props extends ControlForm {
 }
 
 const ComboBox = ({
-  label,
-  whenChange,
-  name,
-  placeholder,
-  readOnly,
-  items,
-  valueField,
-  labelField,
-  disabled = false,
-  hidden = false,
-  disableVariant,
-}: Props) => {
+                    label,
+                    whenChange,
+                    name,
+                    placeholder,
+                    readOnly,
+                    items,
+                    valueField,
+                    labelField,
+                    disabled = false,
+                    hidden = false,
+                    disableVariant,
+                  }: Props) => {
   const { control, watch } = useFormContext();
   const status = useExtractedStatus(name);
   const isLoading = watch('$isloading');
   const newLabel = labelField ?? 'name';
   const newDataField = valueField ?? 'id';
   const variant = disableVariant ? undefined : 'filled';
+
   return (
     <>
       <FormControl
@@ -64,19 +65,22 @@ const ComboBox = ({
                     name={name}
                     id={name}
                     aria-disabled={disabled}
-                    value={field?.value ? field.value[newDataField] : ''}
+                    value={field?.value?.[newDataField] || ''} // Manejo seguro de valor
                     onChange={value => {
                       const item = items.find(
                         x => x[newDataField] === value.target.value,
-                      );
-                      const event = item ? item : undefined;
-                      field.onChange(event); // Pasar el valor del campo de datos al hook form
-                      whenChange ? whenChange(event) : undefined;
+                      ) || null; // Asegura un valor por defecto
+                      field.onChange(item); // Actualiza el valor en el hook form
+                      if (whenChange) {
+                        whenChange(item); // Llama al callback si está definido
+                      }
                     }}
                     placeholder={placeholder}
                     disabled={readOnly}
                     error={status?.hasError}
-                    renderValue={() => `${field.value[newLabel]}`}
+                    renderValue={() =>
+                      field.value ? `${field.value[newLabel]}` : ''
+                    } // Manejo seguro de renderValue
                   >
                     {items.length === 0 && (
                       <MenuItem value="">Ninguno</MenuItem>
