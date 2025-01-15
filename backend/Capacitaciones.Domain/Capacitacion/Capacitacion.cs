@@ -1,8 +1,8 @@
-﻿﻿using Enee.Core.Domain;
+﻿using Enee.Core.Domain;
 using Capacitaciones.Domain.Capacitacion.CrearCapacitacion;
 using Capacitaciones.Domain.Capacitacion.EliminarCapacitacion;
 using Capacitaciones.Domain.Capacitacion.ActualizarCapacitacion;
-using Capacitaciones.Domain.Capacitacion.ObtenerCapacitacionesDisponibles;
+
 
 namespace Capacitaciones.Domain.Capacitacion;
 

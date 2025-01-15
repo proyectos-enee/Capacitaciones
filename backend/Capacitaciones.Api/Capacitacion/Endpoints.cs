@@ -1,9 +1,9 @@
 ﻿using Carter;
 using Capacitaciones.Api.Capacitacion.CrearCapacitacion;
-using Capacitaciones.Api.Capacitacion.LeerCapacitacion;
+using Capacitaciones.Api.Capacitacion.RecuperarCapacitacion;
 using Capacitaciones.Api.Capacitacion.ActualizarCapacitacion;
 using Capacitaciones.Api.Capacitacion.EliminarCapacitacion;
-using Capacitaciones.Api.Capacitacion.ObtenerCapacitacionesDisponibles;
+using Capacitaciones.Api.Capacitacion.RecuperarCapacitacionesDisponibles;
 
 
 
@@ -18,11 +18,12 @@ public class Endpoints:CarterModule
     }
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
-          app.CrearCapacitacion();
-          app.LeerCapacitacion();
-          app.ActualizarCapacitacion();
-          app.EliminarCapacitacion();
-          app.ObtenerCapacitacionesDisponibles();
+        app.CrearCapacitacion();
+        app.RecuperarCapacitacion();
+        app.ActualizarCapacitacion();
+        app.EliminarCapacitacion();
+        app.RecuperarCapacitacionesDisponibles();
+
 
 
 

@@ -50,7 +50,7 @@ export const CapacitacionesMenu: Menu = {
       id: 'visualizacionCapacitaciones',
       title: 'Visualización de Capacitaciones Disponibles',
       type: 'item',
-      url: '/capacitaciones/disponibles',
+      url: '/capacitaciones/visualizar',
       icon: IconDashboard,
       breadcrumbs: true,
       access: [],

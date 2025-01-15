@@ -3,7 +3,7 @@
 public class ActualizarCapacitacionResponse
 {
     public Guid Id { get; set; }
-    public string CodigoCapacitacion { get; set; }
+
     public string NombreCorto { get; set; }
     public string NombreLargo { get; set; }
     public string? Descripcion { get; set; }

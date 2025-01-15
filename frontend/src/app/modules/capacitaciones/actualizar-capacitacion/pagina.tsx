@@ -48,10 +48,6 @@ const PaginaActualizar = () => {
     }
   };
 
-  const regresar = () => {
-    navigate('/capacitaciones'); // Redirige al listado principal
-  };
-
   if (!capacitacion) return <p>Cargando...</p>;
 
   return (
@@ -61,14 +57,9 @@ const PaginaActualizar = () => {
         initialValues={capacitacion}
         nombreFormulario="actualizarCapacitacion"
       />
-      <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
-        <Button type="submit" form="actualizarCapacitacion" color="primary">
-          Actualizar
-        </Button>
-        <Button onClick={regresar} color="secondary">
-          Regresar
-        </Button>
-      </div>
+      <Button type="submit" form="actualizarCapacitacion">
+        Actualizar
+      </Button>
     </MainCard>
   );
 };

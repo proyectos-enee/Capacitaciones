@@ -1,4 +1,4 @@
-﻿using Enee.Core.CQRS.Command;
+﻿﻿using Enee.Core.CQRS.Command;
 using Enee.Core.Domain.Repository;
 using Capacitaciones.Domain.Exceptions;
 namespace Capacitaciones.Domain.Capacitacion.ActualizarCapacitacion;
@@ -67,4 +67,3 @@ public class ActualizarCapacitacionCommandHandler : ICommandHandler<ActualizarCa
         }
     }
 }
-

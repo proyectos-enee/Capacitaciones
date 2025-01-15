@@ -19,6 +19,6 @@ export interface Capacitacion {
 
 // Actualizar una capacitación existente por ID
 export const actualizarCapacitacion = async (id: string, values: Capacitacion) => {
-  return httpApi.put(`/api/v1/capacitacion/${id}`, values);
+  return httpApi.put(`/capacitacion/${id}`, values);
 };
 

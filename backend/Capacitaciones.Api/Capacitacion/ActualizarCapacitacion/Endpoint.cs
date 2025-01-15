@@ -1,4 +1,4 @@
-﻿using Capacitaciones.Api.Utils;
+﻿﻿using Capacitaciones.Api.Utils;
 using Enee.Core.CQRS.Command;
 using Capacitaciones.Domain.Capacitacion.ActualizarCapacitacion;
 
@@ -15,6 +15,7 @@ public static class Endpoint
                 // Despachar el comando para actualizar la capacitación
                 var result = await dispatcher.Dispatch(new ActualizarCapacitacionCommand(
                     id,
+
                     NombreCorto: request.NombreCorto,
                     NombreLargo: request.NombreLargo,
                     Descripcion: request.Descripcion,
