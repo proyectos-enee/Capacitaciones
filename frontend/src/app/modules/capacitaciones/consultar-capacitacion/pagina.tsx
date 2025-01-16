@@ -21,24 +21,15 @@ const Pagina = () => {
   const navigate = useNavigate();
   const confirm = useConfirmDialog();
   const { success, error } = useNotification();
-  const [search, setSearch] = useState<any>({});
   const [openDialog, setOpenDialog] = useState(false); // Control del diálogo de "Ver Detalles"
   const [selectedCapacitacion, setSelectedCapacitacion] = useState<any>(null); // Capacitación seleccionada
 
   // Configuración para paginar
-  const [{ data }] = usePaginate<any>(httpApi, '', search, {
+  const [{ data }] = usePaginate<any>(httpApi, '', {}, {
     pageIn: 1,
     sizeIn: 5,
     sizeOptions: [5, 10],
   });
-
-  const buscarCapacitaciones = () => {
-    setSearch({
-      codigoCapacitacion: search.codigoCapacitacion || '',
-      nombreCorto: search.nombreCorto || '',
-    });
-  };
-
 
   const actions: Array<ActionColumn> = [
     {
@@ -96,6 +87,7 @@ const Pagina = () => {
       headerName: 'Código Capacitación',
       field: 'codigoCapacitacion',
     },
+
     {
       headerName: 'Nombre Corto',
       field: 'nombreCorto',
@@ -103,6 +95,22 @@ const Pagina = () => {
     {
       headerName: 'Estado',
       field: 'estado',
+    },
+    {
+      headerName: 'Modalidad',
+      field: 'modalidad',
+    },
+    {
+      headerName: 'Fecha Inicio',
+      field: 'fechaInicioRegistro',
+    },
+    {
+      headerName: 'Lugar',
+      field: 'lugar',
+    },
+    {
+      headerName: 'Horario',
+      field: 'horario',
     },
   ];
 
@@ -115,41 +123,9 @@ const Pagina = () => {
       <MainCard xs={{ maxWidth: '1200px' }}>
         <GroupToolbar>
           <BtnGroup>
-            <Button onClick={buscarCapacitaciones}>Buscar</Button>
             <Button onClick={nuevaCapacitacion}>Crear Capacitación</Button>
           </BtnGroup>
         </GroupToolbar>
-
-        {/* Formulario de Búsqueda */}
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            marginTop: '20px',
-          }}
-        >
-          <div style={{ display: 'flex', gap: '10px' }}>
-            <input
-              type="text"
-              placeholder="Código de Capacitación"
-              value={search.codigoCapacitacion || ''}
-              onChange={e =>
-                setSearch({ ...search, codigoCapacitacion: e.target.value })
-              }
-              style={{ padding: '5px', width: '200px' }}
-            />
-            <input
-              type="text"
-              placeholder="Nombre Corto"
-              value={search.nombreCorto || ''}
-              onChange={e =>
-                setSearch({ ...search, nombreCorto: e.target.value })
-              }
-              style={{ padding: '5px', width: '200px' }}
-            />
-            <Button onClick={buscarCapacitaciones}>Buscar</Button>
-          </div>
-        </div>
 
         <PaginableGrid
           paginable={data as PaginateResult<any>}
@@ -204,16 +180,16 @@ const Pagina = () => {
                 <strong>Fecha de Inicio:</strong>{' '}
                 {selectedCapacitacion.fechaInicioRegistro
                   ? new Date(
-                      selectedCapacitacion.fechaInicioRegistro,
-                    ).toLocaleDateString()
+                    selectedCapacitacion.fechaInicioRegistro,
+                  ).toLocaleDateString()
                   : 'N/A'}
               </p>
               <p>
                 <strong>Fecha de Fin:</strong>{' '}
                 {selectedCapacitacion.fechaFinRegistro
                   ? new Date(
-                      selectedCapacitacion.fechaFinRegistro,
-                    ).toLocaleDateString()
+                    selectedCapacitacion.fechaFinRegistro,
+                  ).toLocaleDateString()
                   : 'N/A'}
               </p>
               <p>

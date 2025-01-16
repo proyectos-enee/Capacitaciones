@@ -40,6 +40,9 @@ public class ConsultaCapacitacionesDisponiblesRunner : IQueryRunner<ConsultaCapa
         {
             spec.Query.Where(x => x.FechaFinRegistro <= query.FechaFinRegistro.Value);
         }
+        // Filtrar por estado disponible
+        spec.Query.Where(x => x.Estado == "disponible");
+
 
         // Ordenar resultados
         spec.Query.OrderBy(x => x.FechaInicioRegistro);

@@ -58,6 +58,7 @@ const PaginaActualizar = () => {
         nombreFormulario="actualizarCapacitacion"
       />
       <Button type="submit" form="actualizarCapacitacion">
+
         Actualizar
       </Button>
     </MainCard>
