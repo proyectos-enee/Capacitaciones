@@ -1,4 +1,3 @@
-
 import { httpApi } from '../../../http/http-api.ts';
 import { usePaginate } from '@common/hooks/use-paginate.ts';
 import { useState } from 'react';
@@ -11,7 +10,6 @@ import { Button } from '@components/button/button.tsx';
 import { Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 
 const VisualizarCapacitaciones = () => {
-
   const [search, setSearch] = useState<any>({});
   const [openDialog, setOpenDialog] = useState(false); // Control del diálogo de "Ver Detalles"
   const [selectedCapacitacion, setSelectedCapacitacion] = useState<any>(null); // Capacitación seleccionada
@@ -40,16 +38,20 @@ const VisualizarCapacitaciones = () => {
           color="secondary"
           startIcon={<InfoIcon />}
           onClick={() => {
+            console.log('Datos seleccionados:', rowData); // Debugging
             setSelectedCapacitacion(rowData);
             setOpenDialog(true);
           }}
         >
           Ver Detalles
         </Button>
+
+
       ),
     },
+
     {
-      headerName: 'NombreCorto',
+      headerName: 'Nombre Corto',
       field: 'nombreCorto',
     },
     {
@@ -82,7 +84,7 @@ const VisualizarCapacitaciones = () => {
           <div style={{ display: 'flex', gap: '10px' }}>
             <input
               type="text"
-              placeholder="NombreCorto"
+              placeholder="Nombre Corto"
               value={search.nombreCorto || ''}
               onChange={e => setSearch({ ...search, nombreCorto: e.target.value })}
               style={{ padding: '5px', width: '200px' }}
@@ -97,7 +99,7 @@ const VisualizarCapacitaciones = () => {
               <option value="">Todas</option>
               <option value="presencial">Presencial</option>
               <option value="virtual">Virtual</option>
-              <option value="hibrido">hibrido</option>
+              <option value="hibrido">Híbrido</option>
             </select>
             <input
               type="date"
@@ -138,20 +140,17 @@ const VisualizarCapacitaciones = () => {
           {selectedCapacitacion && (
             <div>
               <p>
-                <strong>NombreCorto:</strong> {selectedCapacitacion.nombreCorto}
+                <strong>Nombre Corto:</strong> {selectedCapacitacion.nombreCorto || 'N/A'}
               </p>
               <p>
-                <strong>Modalidad:</strong> {selectedCapacitacion.modalidad}
+                <strong>Modalidad:</strong> {selectedCapacitacion.modalidad || 'N/A'}
               </p>
               <p>
-                <strong>Descripción:</strong>{' '}
-                {selectedCapacitacion.descripcion || 'N/A'}
+                <strong>Descripción:</strong> {selectedCapacitacion.descripcion || 'N/A'}
               </p>
               <p>
                 <strong>Fecha de Inicio:</strong>{' '}
-                {new Date(
-                  selectedCapacitacion.fechaInicioRegistro,
-                ).toLocaleDateString()}
+                {new Date(selectedCapacitacion.fechaInicioRegistro).toLocaleDateString()}
               </p>
               <p>
                 <strong>Fecha de Fin:</strong>{' '}
@@ -164,6 +163,7 @@ const VisualizarCapacitaciones = () => {
           <Button onClick={() => setOpenDialog(false)} color="primary">
             Cerrar
           </Button>
+
         </DialogActions>
       </Dialog>
     </>
