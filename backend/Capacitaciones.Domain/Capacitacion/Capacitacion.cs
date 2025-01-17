@@ -121,25 +121,40 @@ public class Capacitacion : AggregateRoot<Guid>
         DateTime fechaFinRegistro,
         string estado)
     {
-        NombreCorto = nombreCorto;
-        NombreLargo = nombreLargo;
-        Descripcion = descripcion;
-        EnteCapacitador = enteCapacitador;
-        Modalidad = modalidad;
-        Lugar = lugar;
-        Horario = horario;
-        FechaInicioRegistro = fechaInicioRegistro;
-        FechaFinRegistro = fechaFinRegistro;
-        Estado = estado;
+        var capacitacion = new CapacitacionActualizada
+        (  Id,
+        nombreCorto,
+        nombreLargo,
+        descripcion,
+        enteCapacitador,
+        modalidad,
+        lugar,
+        horario,
+        fechaInicioRegistro,
+        fechaFinRegistro,
+        estado);
 
-        // Incrementar versión u otras operaciones si es necesario
+        Apply(NewChange(capacitacion));
+    }
+
+    public void Apply(CapacitacionActualizada  capacitacionActualizada)
+    {
+        NombreCorto = capacitacionActualizada.NombreCorto;
+        NombreLargo = capacitacionActualizada.NombreLargo;
+        Descripcion = capacitacionActualizada.Descripcion;
+        EnteCapacitador = capacitacionActualizada.EnteCapacitador;
+        Modalidad = capacitacionActualizada.Modalidad;
+        Lugar =  capacitacionActualizada.Lugar;
+        Horario = capacitacionActualizada.Horario;
+        FechaInicioRegistro = capacitacionActualizada.FechaInicioRegistro;
+        FechaFinRegistro = capacitacionActualizada.FechaFinRegistro;
+        Estado = capacitacionActualizada.Estado;
         Version++;
     }
 
     private void Apply(CapacitacionEliminada @event)
     {
-        // Aquí puedes manejar cualquier lógica adicional cuando se elimina una capacitación,
-        // como marcarla como eliminada, o simplemente actualizar la versión.
+
         Version++;
     }
 }
