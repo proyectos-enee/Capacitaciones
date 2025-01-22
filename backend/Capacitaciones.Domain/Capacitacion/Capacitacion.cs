@@ -1,4 +1,4 @@
-﻿﻿using Enee.Core.Domain;
+﻿using Enee.Core.Domain;
 using Capacitaciones.Domain.Capacitacion.CrearCapacitacion;
 using Capacitaciones.Domain.Capacitacion.EliminarCapacitacion;
 using Capacitaciones.Domain.Capacitacion.ActualizarCapacitacion;
@@ -121,19 +121,6 @@ public class Capacitacion : AggregateRoot<Guid>
         DateTime fechaFinRegistro,
         string estado)
     {
-<<<<<<< HEAD
-        NombreCorto = nombreCorto;
-        NombreLargo = nombreLargo;
-        Descripcion = descripcion;
-        EnteCapacitador = enteCapacitador;
-        Modalidad = modalidad;
-        Lugar = lugar;
-        Horario = horario;
-        FechaInicioRegistro = fechaInicioRegistro;
-        FechaFinRegistro = fechaFinRegistro;
-        Estado = estado;
-=======
->>>>>>> 78a36fe022abee3f1f601dba65f8332728b9c5bb
         var capacitacion = new CapacitacionActualizada
         (  Id,
         nombreCorto,
@@ -147,15 +134,9 @@ public class Capacitacion : AggregateRoot<Guid>
         fechaFinRegistro,
         estado);
 
-<<<<<<< HEAD
-        // Incrementar versión u otras operaciones si es necesario
-        Apply(NewChange(capacitacion));
-    }
-=======
         Apply(NewChange(capacitacion));
     }
 
->>>>>>> 78a36fe022abee3f1f601dba65f8332728b9c5bb
     public void Apply(CapacitacionActualizada  capacitacionActualizada)
     {
         NombreCorto = capacitacionActualizada.NombreCorto;
