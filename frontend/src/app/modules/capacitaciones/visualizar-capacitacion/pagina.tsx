@@ -9,13 +9,13 @@ import InfoIcon from '@mui/icons-material/Info';
 import { Button } from '@components/button/button.tsx';
 import { Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 
-const VisualizarCapacitaciones = () => {
+const Pagina = () => {
   const [search, setSearch] = useState<any>({});
   const [openDialog, setOpenDialog] = useState(false); // Control del diálogo de "Ver Detalles"
   const [selectedCapacitacion, setSelectedCapacitacion] = useState<any>(null); // Capacitación seleccionada
 
   // Configuración para paginar
-  const [{ data }] = usePaginate<any>(httpApi, '/capacitaciones/disponibles', search, {
+  const [{ data }] = usePaginate<any>(httpApi, '/capacitacion/capacitaciones/disponibles', search, {
     pageIn: 1,
     sizeIn: 5,
     sizeOptions: [5, 10],
@@ -42,14 +42,12 @@ const VisualizarCapacitaciones = () => {
             setSelectedCapacitacion(rowData);
             setOpenDialog(true);
           }}
+          key={rowData.id} // Se asegura que cada acción tenga un key único
         >
           Ver Detalles
         </Button>
-
-
       ),
     },
-
     {
       headerName: 'Nombre Corto',
       field: 'nombreCorto',
@@ -61,12 +59,18 @@ const VisualizarCapacitaciones = () => {
     {
       headerName: 'Fecha Inicio',
       field: 'fechaInicioRegistro',
-      renderCell: (rowData: any) => new Date(rowData.fechaInicioRegistro).toLocaleDateString(),
+      renderCell: (rowData: any) =>
+        rowData.fechaInicioRegistro
+          ? new Date(rowData.fechaInicioRegistro).toLocaleDateString('es-ES')
+          : 'Fecha no disponible',
     },
     {
       headerName: 'Fecha Fin',
       field: 'fechaFinRegistro',
-      renderCell: (rowData: any) => new Date(rowData.fechaFinRegistro).toLocaleDateString(),
+      renderCell: (rowData: any) =>
+        rowData.fechaFinRegistro
+          ? new Date(rowData.fechaFinRegistro).toLocaleDateString('es-ES')
+          : 'Fecha no disponible',
     },
   ];
 
@@ -86,14 +90,12 @@ const VisualizarCapacitaciones = () => {
               type="text"
               placeholder="Nombre Corto"
               value={search.nombreCorto || ''}
-              onChange={e => setSearch({ ...search, nombreCorto: e.target.value })}
+              onChange={(e) => setSearch({ ...search, nombreCorto: e.target.value })}
               style={{ padding: '5px', width: '200px' }}
             />
             <select
               value={search.modalidad || ''}
-              onChange={e =>
-                setSearch({ ...search, modalidad: e.target.value })
-              }
+              onChange={(e) => setSearch({ ...search, modalidad: e.target.value })}
               style={{ padding: '5px', width: '200px' }}
             >
               <option value="">Todas</option>
@@ -105,7 +107,7 @@ const VisualizarCapacitaciones = () => {
               type="date"
               placeholder="Fecha Inicio"
               value={search.fechaInicioRegistro || ''}
-              onChange={e =>
+              onChange={(e) =>
                 setSearch({ ...search, fechaInicioRegistro: e.target.value })
               }
               style={{ padding: '5px', width: '200px' }}
@@ -114,7 +116,9 @@ const VisualizarCapacitaciones = () => {
               type="date"
               placeholder="Fecha Fin"
               value={search.fechaFinRegistro || ''}
-              onChange={e => setSearch({ ...search, fechaFinRegistro: e.target.value })}
+              onChange={(e) =>
+                setSearch({ ...search, fechaFinRegistro: e.target.value })
+              }
               style={{ padding: '5px', width: '200px' }}
             />
             <Button onClick={buscarCapacitaciones}>Buscar</Button>
@@ -125,6 +129,7 @@ const VisualizarCapacitaciones = () => {
         <PaginableGrid
           paginable={data as PaginateResult<any>}
           columnDefs={columns}
+          getRowId={(row: any) => row.id} // Asignar una key única para cada fila
         />
       </MainCard>
 
@@ -149,12 +154,19 @@ const VisualizarCapacitaciones = () => {
                 <strong>Descripción:</strong> {selectedCapacitacion.descripcion || 'N/A'}
               </p>
               <p>
-                <strong>Fecha de Inicio:</strong>{' '}
-                {new Date(selectedCapacitacion.fechaInicioRegistro).toLocaleDateString()}
+                <strong>Fecha de Inicio:</strong>
+                {selectedCapacitacion.fechaInicioRegistro
+                  ? new Date(selectedCapacitacion.fechaInicioRegistro).toLocaleDateString('es-ES')
+                  : 'Fecha no disponible'}
               </p>
               <p>
-                <strong>Fecha de Fin:</strong>{' '}
-                {new Date(selectedCapacitacion.fechaFinRegistro).toLocaleDateString()}
+                <strong>Fecha de Fin:</strong>
+                {selectedCapacitacion.fechaFinRegistro
+                  ? new Date(selectedCapacitacion.fechaFinRegistro).toLocaleDateString('es-ES')
+                  : 'Fecha no disponible'}
+              </p>
+              <p>
+                <strong>Lugar:</strong> {selectedCapacitacion.lugar || 'N/A'}
               </p>
             </div>
           )}
@@ -163,11 +175,10 @@ const VisualizarCapacitaciones = () => {
           <Button onClick={() => setOpenDialog(false)} color="primary">
             Cerrar
           </Button>
-
         </DialogActions>
       </Dialog>
     </>
   );
 };
 
-export default VisualizarCapacitaciones;
+export default Pagina;

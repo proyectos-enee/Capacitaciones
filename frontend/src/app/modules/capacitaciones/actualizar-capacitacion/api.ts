@@ -22,3 +22,4 @@ export const actualizarCapacitacion = async (id: string, values: Capacitacion) =
   return httpApi.put(`/capacitacion/${id}`, values);
 };
 
+

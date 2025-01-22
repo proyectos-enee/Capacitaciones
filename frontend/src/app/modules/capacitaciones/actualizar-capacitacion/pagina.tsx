@@ -6,7 +6,7 @@ import { useNotification } from '@components/snackbar/use-notification.ts';
 import { actualizarCapacitacion } from './api.ts';
 import { Button } from '@components/button/button.tsx';
 
-const PaginaActualizar = () => {
+const Pagina = () => {
   const { id } = useParams<{ id: string }>(); // Parámetro dinámico desde la URL
   const location = useLocation(); // Para manejar el estado pasado
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ const PaginaActualizar = () => {
       // Si no hay datos en el estado, se puede cargar desde la API
       const cargarCapacitacion = async () => {
         try {
-          const response = await fetch(`http://localhost:5090/api/v1/capacitacion/${id}`);
+          const response = await fetch(`http://localhost:5090/api/v1/capacitacion/${id}`, { method: 'ACTUALIZAR' });
           if (!response.ok) throw new Error('Error al cargar la capacitación.');
           const data = await response.json();
           setCapacitacion(data);
@@ -40,11 +40,13 @@ const PaginaActualizar = () => {
 
   const guardar = async (values: any) => {
     try {
+      console.log(values);
       await actualizarCapacitacion(id!, values);
       success('Capacitación actualizada correctamente');
       navigate('/capacitaciones'); // Redirigir después de la actualización
     } catch (err) {
       error('Error al actualizar la capacitación.');
+      console.error(err);
     }
   };
 
@@ -65,4 +67,4 @@ const PaginaActualizar = () => {
   );
 };
 
-export default PaginaActualizar;
+export default Pagina;

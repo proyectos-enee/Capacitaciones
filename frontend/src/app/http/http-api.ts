@@ -9,7 +9,7 @@ import { env } from 'environment/env.ts';
 class HttpApplication extends HttpAxios {
   constructor() {
     super({
-      baseURL: `${env.BASE_URL_API}/api/v1/capacitacion`,
+      baseURL: `${env.BASE_URL_API}/api/v1`,
       headers: HeaderApplicationJson,
     });
   }

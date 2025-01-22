@@ -2,7 +2,7 @@
 
 public class ActualizarCapacitacionRequest
 {
-    public Guid Id { get; set; } // ID de la capacitación a actualizar
+
 
 
 

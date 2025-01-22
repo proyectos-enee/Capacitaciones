@@ -3,12 +3,12 @@ using FluentMigrator;
 using Microsoft.Extensions.Options;
 
 namespace Capacitaciones.Data.Migrations;
-[Migration(202404111625)]
-public class AgregarTablaUsuarios : Migration
+[Migration(202404111628)]
+public class AgregarTablaEmpleados : Migration
 {
     private readonly DbSettings _dbSettings;
 
-    public AgregarTablaUsuarios(IOptions<DbSettings> dbSetting)
+    public AgregarTablaEmpleados(IOptions<DbSettings> dbSetting)
     {
         _dbSettings = dbSetting.Value;
     }
@@ -17,8 +17,9 @@ public class AgregarTablaUsuarios : Migration
     {
         var schema = _dbSettings.SchemaTables;
 
-        Create.Table("Usuarios").InSchema(schema)
+        Create.Table("Empleados").InSchema(schema)
             .WithIdColumn() // El sistema genera automáticamente un nombre para la restricción de la clave primaria
+            .WithColumn("ClaveEmpleado").AsString(50).NotNullable().Unique() // Clave única del empleado
             .WithColumn("Nombre").AsString(100).NotNullable()
             .WithColumn("Apellido").AsString(100).NotNullable()
             .WithColumn("Email").AsString(150).NotNullable().Unique()
@@ -32,6 +33,6 @@ public class AgregarTablaUsuarios : Migration
     {
         var schema = _dbSettings.SchemaTables;
 
-        Delete.Table("Usuarios").InSchema(schema);
+        Delete.Table("Empleados").InSchema(schema);
     }
 }

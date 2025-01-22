@@ -4,51 +4,44 @@ import { Row } from '@components/ui-layout/row.tsx';
 import { Col } from '@components/ui-layout/col.tsx';
 
 import { useNotification } from '@components/snackbar/use-notification.ts';
-import { crearCapacitacion } from './api.ts';
+
 import { Button } from '@components/button/button.tsx';
+import { crearCapacitacion } from './api.ts';
+import {
+  BtnGroup,
+  GroupToolbar,
+} from '@components/toolbar-group/group-toolbar.tsx';
+import { useNavigate } from 'react-router-dom';
 
 const nameForm = 'cualquierCosa';
-
 const Pagina = () => {
   const { success } = useNotification();
-
+  const navigate = useNavigate();
   const guardar = async (values: any) => {
-    console.log('INSERTAR', values);
-
-    // Aquí es donde se llaman los datos para crear la capacitación.
-    await crearCapacitacion({
-      id: '3ed540e2-4c9b-4228-a99f-a8a6c5d695d7',
-      codigoCapacitacion: values.codigoCapacitacion,
-      nombreCorto: values.nombreCorto,
-      nombreLargo: values.nombreLargo,
-      descripcion: values.descripcion,
-      enteCapacitador: values.enteCapacitador,
-      modalidad: values.modalidad.id,
-      lugar: values.lugar,
-      horario: values.horario,
-      fechaInicioRegistro: values.fechaInicioRegistro,
-      fechaFinRegistro: values.fechaFinRegistro,
-      estado: values.estado.id,
-    });
-
-    success('Capacitación guardada correctamente');
+    await crearCapacitacion(values);
+    success('Guardado correctamente');
+    navigate(`/capacitaciones`);
   };
-
   return (
-    <MainCard xs={{ maxWidth: '1200px' }}>
+    <MainCard >
       <CapacitacionFormulario
-        onSubmit={values => guardar(values)} // Se pasa `values` con el tipo `any`
+        onSubmit={values => guardar(values as any)}
         nombreFormulario={nameForm}
       />
-      <Row>
-        <Col>
-          <Button form={nameForm} type="submit">
-            Guardar
-          </Button>
+
+      <Row >
+        <Col sx={{ mt: 2 }}>
+          <GroupToolbar>
+            <BtnGroup />
+            <BtnGroup>
+              <Button form={nameForm} type="submit" >
+                Guardar
+              </Button>
+            </BtnGroup>
+          </GroupToolbar>
         </Col>
       </Row>
     </MainCard>
   );
 };
-
 export default Pagina;

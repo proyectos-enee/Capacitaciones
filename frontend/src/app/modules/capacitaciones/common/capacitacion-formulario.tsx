@@ -5,6 +5,7 @@ import {
   InputText,
 } from '@components/form';
 import { Grid } from '@mui/material';
+
 import * as yup from 'yup';
 import TimePickerComponent from '@components/form/date-time/time-picker';
 import { Row } from '@components/ui-layout/row.tsx';
@@ -67,7 +68,14 @@ export const CapacitacionFormulario = ({
                                          initialValues = {}, // Valores iniciales con predeterminado vacío
                                        }: Props) => {
   const guardar = (values: any) => {
-    onSubmit(values);
+
+    const newvalues={
+      ...values,
+      estado:values.estado.id,
+      modalidad: values.modalidad.id,
+    }
+    console.log(newvalues)
+    onSubmit(newvalues);
   };
 
   return (

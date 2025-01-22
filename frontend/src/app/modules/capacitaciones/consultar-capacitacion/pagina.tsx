@@ -23,9 +23,10 @@ const Pagina = () => {
   const { success, error } = useNotification();
   const [openDialog, setOpenDialog] = useState(false); // Control del diálogo de "Ver Detalles"
   const [selectedCapacitacion, setSelectedCapacitacion] = useState<any>(null); // Capacitación seleccionada
+  const [search] = useState<any>({});
 
   // Configuración para paginar
-  const [{ data }] = usePaginate<any>(httpApi, '', {}, {
+  const [{ data }] = usePaginate<any>(httpApi, 'capacitacion', search, {
     pageIn: 1,
     sizeIn: 5,
     sizeOptions: [5, 10],

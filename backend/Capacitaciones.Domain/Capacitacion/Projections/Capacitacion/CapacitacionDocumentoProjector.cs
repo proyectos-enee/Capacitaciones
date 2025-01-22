@@ -2,6 +2,7 @@
 using Capacitaciones.Domain.Capacitacion.CrearCapacitacion;
 using Capacitaciones.Domain.Capacitacion.EliminarCapacitacion;
 using Capacitaciones.Domain.Capacitacion.ActualizarCapacitacion;
+using JasperFx.Core;
 
 namespace Capacitaciones.Domain.Capacitacion.Projections.Capacitacion;
 
