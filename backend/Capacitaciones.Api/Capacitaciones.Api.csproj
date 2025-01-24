@@ -41,7 +41,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="RegistrarColaborador\" />
+      <Folder Include="Capacitacion\ActualizarColaborador\" />
+      <Folder Include="Capacitacion\EliminarColaborador\" />
     </ItemGroup>
 
 </Project>

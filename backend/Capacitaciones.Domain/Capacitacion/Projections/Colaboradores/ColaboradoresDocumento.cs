@@ -13,7 +13,7 @@ public class ColaboradoresDocumento : Document<Guid>
     public string Apellido { get; set; }
     public string? Email { get; set; }
     public string Password { get; set; }
-    public string Modalidad { get; set; }
+
     public DateTime FechaRegistro { get; set; }
     public string Estado { get; set; }
 }
