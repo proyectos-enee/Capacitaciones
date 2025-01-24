@@ -45,6 +45,7 @@ const Pagina = () => {
               .then((response) => {
                 if (response.ok) {
                   success('Capacitación ha sido eliminada');
+
                 } else {
                   error('Error al eliminar');
                 }

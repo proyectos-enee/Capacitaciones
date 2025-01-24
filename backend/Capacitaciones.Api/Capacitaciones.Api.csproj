@@ -40,4 +40,8 @@
       <ProjectReference Include="..\Capacitaciones.Domain\Capacitaciones.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="RegistrarColaborador\" />
+    </ItemGroup>
+
 </Project>

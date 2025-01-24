@@ -7,6 +7,7 @@ using Capacitaciones.Api.Capacitacion.RecuperarCapacitacionesDisponibles;
 
 
 
+
 namespace Capacitaciones.Api.Capacitacion;
 
 public class Endpoints:CarterModule
@@ -23,6 +24,8 @@ public class Endpoints:CarterModule
         app.ActualizarCapacitacion();
         app.EliminarCapacitacion();
         app.RecuperarCapacitacionesDisponibles();
+
+
 
 
 

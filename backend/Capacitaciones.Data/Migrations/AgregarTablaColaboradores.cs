@@ -4,11 +4,11 @@ using Microsoft.Extensions.Options;
 
 namespace Capacitaciones.Data.Migrations;
 [Migration(202404111628)]
-public class AgregarTablaEmpleados : Migration
+public class AgregarTablaColaboradores : Migration
 {
     private readonly DbSettings _dbSettings;
 
-    public AgregarTablaEmpleados(IOptions<DbSettings> dbSetting)
+    public AgregarTablaColaboradores(IOptions<DbSettings> dbSetting)
     {
         _dbSettings = dbSetting.Value;
     }
@@ -17,7 +17,7 @@ public class AgregarTablaEmpleados : Migration
     {
         var schema = _dbSettings.SchemaTables;
 
-        Create.Table("Empleados").InSchema(schema)
+        Create.Table("Colaboradores").InSchema(schema)
             .WithIdColumn() // El sistema genera automáticamente un nombre para la restricción de la clave primaria
             .WithColumn("ClaveEmpleado").AsString(50).NotNullable().Unique() // Clave única del empleado
             .WithColumn("Nombre").AsString(100).NotNullable()
@@ -33,6 +33,6 @@ public class AgregarTablaEmpleados : Migration
     {
         var schema = _dbSettings.SchemaTables;
 
-        Delete.Table("Empleados").InSchema(schema);
+        Delete.Table("Colaboradores").InSchema(schema);
     }
 }
