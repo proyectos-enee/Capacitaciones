@@ -1,0 +1,75 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\manue\\Capacitaciones\\backend\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{1EF1E399-E95E-42EE-BF53-5487368FF212}|Capacitaciones.Api\\Capacitaciones.Api.csproj|c:\\users\\manue\\capacitaciones\\backend\\capacitaciones.api\\controllers\\capacitacioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1EF1E399-E95E-42EE-BF53-5487368FF212}|Capacitaciones.Api\\Capacitaciones.Api.csproj|solutionrelative:capacitaciones.api\\controllers\\capacitacioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{322A7D62-4FC8-4CE6-9894-5DE0A69257E3}|Capacitaciones.Domain\\Capacitaciones.Domain.csproj|c:\\users\\manue\\capacitaciones\\backend\\capacitaciones.domain\\capacitacion\\consultarcolaboradores\\consultacolaboradoresrunner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{322A7D62-4FC8-4CE6-9894-5DE0A69257E3}|Capacitaciones.Domain\\Capacitaciones.Domain.csproj|solutionrelative:capacitaciones.domain\\capacitacion\\consultarcolaboradores\\consultacolaboradoresrunner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1EF1E399-E95E-42EE-BF53-5487368FF212}|Capacitaciones.Api\\Capacitaciones.Api.csproj|c:\\users\\manue\\capacitaciones\\backend\\capacitaciones.api\\capacitacion\\recuperarcolaboradores\\endpoint.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1EF1E399-E95E-42EE-BF53-5487368FF212}|Capacitaciones.Api\\Capacitaciones.Api.csproj|solutionrelative:capacitaciones.api\\capacitacion\\recuperarcolaboradores\\endpoint.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ConsultaColaboradoresRunner.cs",
+              "DocumentMoniker": "C:\\Users\\manue\\Capacitaciones\\backend\\Capacitaciones.Domain\\Capacitacion\\ConsultarColaboradores\\ConsultaColaboradoresRunner.cs",
+              "RelativeDocumentMoniker": "Capacitaciones.Domain\\Capacitacion\\ConsultarColaboradores\\ConsultaColaboradoresRunner.cs",
+              "ToolTip": "C:\\Users\\manue\\Capacitaciones\\backend\\Capacitaciones.Domain\\Capacitacion\\ConsultarColaboradores\\ConsultaColaboradoresRunner.cs",
+              "RelativeToolTip": "Capacitaciones.Domain\\Capacitacion\\ConsultarColaboradores\\ConsultaColaboradoresRunner.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAWwBgAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-28T19:06:19.311Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Endpoint.cs",
+              "DocumentMoniker": "C:\\Users\\manue\\Capacitaciones\\backend\\Capacitaciones.Api\\Capacitacion\\RecuperarColaboradores\\Endpoint.cs",
+              "RelativeDocumentMoniker": "Capacitaciones.Api\\Capacitacion\\RecuperarColaboradores\\Endpoint.cs",
+              "ToolTip": "C:\\Users\\manue\\Capacitaciones\\backend\\Capacitaciones.Api\\Capacitacion\\RecuperarColaboradores\\Endpoint.cs",
+              "RelativeToolTip": "Capacitaciones.Api\\Capacitacion\\RecuperarColaboradores\\Endpoint.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAAABEAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-28T00:44:49.154Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "CapacitacionController.cs",
+              "DocumentMoniker": "C:\\Users\\manue\\Capacitaciones\\backend\\Capacitaciones.Api\\Controllers\\CapacitacionController.cs",
+              "RelativeDocumentMoniker": "Capacitaciones.Api\\Controllers\\CapacitacionController.cs",
+              "ToolTip": "C:\\Users\\manue\\Capacitaciones\\backend\\Capacitaciones.Api\\Controllers\\CapacitacionController.cs*",
+              "RelativeToolTip": "Capacitaciones.Api\\Controllers\\CapacitacionController.cs*",
+              "ViewState": "AgIAABQAAAAAAAAAAAAgwAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-28T00:44:23.038Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
