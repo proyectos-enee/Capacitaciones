@@ -1,10 +1,12 @@
 ﻿using Enee.Core.CQRS.Query;
+using Ardalis.Specification;
 using Capacitaciones.Domain.Capacitacion.CrearColaborador;
 using Capacitaciones.Domain.Capacitacion.EliminarColaborador;
 using Capacitaciones.Domain.Capacitacion.ActualizarColaborador;
 using JasperFx.Core;
 
 namespace Capacitaciones.Domain.Capacitacion.Projections.Colaboradores;
+
 
 public class ColaboradoresDocumentoProjector : DocumentProjector<ColaboradoresDocumento>
 {
@@ -13,12 +15,12 @@ public class ColaboradoresDocumentoProjector : DocumentProjector<ColaboradoresDo
         // Manejador para el evento CapacitacionCreada
         Create<ColaboradorCreado>((@event, documento) =>
         {
-            documento.Id = @event.AggregateId;
+
             documento.ClaveEmpleado = @event.ClaveEmpleado;
             documento.Nombre = @event.Nombre;
-            documento.Apellido = @event.Apellido;
-            documento.Email = @event.Email;
-            documento.Password = @event.Password;
+            documento.Cargo = @event.Cargo;
+            documento.Correo = @event.Correo;
+            documento.Dependencia = @event.Dependencia;
             documento.FechaRegistro = @event.FechaRegistro;
             documento.Estado = @event.Estado;
             //documento.Otro = "Otro";
@@ -30,9 +32,9 @@ public class ColaboradoresDocumentoProjector : DocumentProjector<ColaboradoresDo
             // Aquí solo actualizamos las propiedades que han cambiado
 
             documento.Nombre = @event.Nombre;
-            documento.Apellido = @event.Apellido;
-            documento.Email = @event.Email;
-            documento.Password = @event.Password;
+            documento.Cargo = @event.Cargo;
+            documento.Correo = @event.Correo;
+            documento.Dependencia = @event.Dependencia;
             documento.FechaRegistro = @event.FechaRegistro;
             documento.Estado = @event.Estado;
         });

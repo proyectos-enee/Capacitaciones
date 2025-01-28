@@ -5,6 +5,7 @@ import DetalleCapacitacion from './detalles-capacitacion';
 import ActualizarCapacitacion from './actualizar-capacitacion';
 import VisualizarCapacitacion from './visualizar-capacitacion';
 import RegistroCapacitacion from './registro-capacitacion';
+
 const CapacitacionesRouting = () => {
   return (
     <Routes>
@@ -15,6 +16,7 @@ const CapacitacionesRouting = () => {
       <Route path="detalle" element={<DetalleCapacitacion />} />
       <Route path="visualizar" element={<VisualizarCapacitacion />} />
       <Route path="registro" element={<RegistroCapacitacion />} />
+
     </Routes>
   );
 };

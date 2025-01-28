@@ -1,6 +1,7 @@
 import { httpApi } from '../../../http/http-api.ts';
 import { usePaginate } from '@common/hooks/use-paginate.ts';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { PaginableGrid } from '@components/grid/paginable-grid.tsx';
 import { PaginateResult } from '@common/hooks/models/paginate-result.ts';
 import MainCard from '@common/ui-component/cards/main-card.tsx';
@@ -11,7 +12,8 @@ import { Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material
 
 const Pagina = () => {
   const [search, setSearch] = useState<any>({});
-  const [openDialog, setOpenDialog] = useState(false); // Control del diálogo de "Ver Detalles"
+  const navigate = useNavigate();
+  const [openDialog, setOpenDialog] = useState(false);
   const [selectedCapacitacion, setSelectedCapacitacion] = useState<any>(null); // Capacitación seleccionada
 
   // Configuración para paginar
@@ -31,23 +33,6 @@ const Pagina = () => {
   };
 
   const columns: ColumnDef[] = [
-    {
-      headerName: 'Acciones',
-      renderCell: (rowData: any) => (
-        <Button
-          color="secondary"
-          startIcon={<InfoIcon />}
-          onClick={() => {
-            console.log('Datos seleccionados:', rowData); // Debugging
-            setSelectedCapacitacion(rowData);
-            setOpenDialog(true);
-          }}
-          key={rowData.id} // Se asegura que cada acción tenga un key único
-        >
-          Ver Detalles
-        </Button>
-      ),
-    },
     {
       headerName: 'Nombre Corto',
       field: 'nombreCorto',
@@ -71,6 +56,23 @@ const Pagina = () => {
         rowData.fechaFinRegistro
           ? new Date(rowData.fechaFinRegistro).toLocaleDateString('es-ES')
           : 'Fecha no disponible',
+    },
+    {
+      // Columna de acciones
+      renderCell: (rowData: any) => (
+        <Button
+          color="secondary"
+          startIcon={<InfoIcon />}
+          onClick={() => {
+            console.log('Datos seleccionados:', rowData); // Debugging
+            setSelectedCapacitacion(rowData);
+            setOpenDialog(true);
+          }}
+          key={rowData.id}
+        >
+          Ver Detalles
+        </Button>
+      ),
     },
   ];
 
@@ -172,6 +174,9 @@ const Pagina = () => {
           )}
         </DialogContent>
         <DialogActions>
+          <Button onClick={() => navigate('/capacitaciones/registro')} color="primary">
+            Registrarse
+          </Button>
           <Button onClick={() => setOpenDialog(false)} color="primary">
             Cerrar
           </Button>

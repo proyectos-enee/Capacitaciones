@@ -3,4 +3,4 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Capacitaciones.Domain.Capacitacion.CrearColaborador;
 
-public record CrearColaboradorCommand(Guid Id, string ClaveEmpleado, string Nombre, string Apellido, string Email,string Password ,DateTime FechaRegistro, string Estado) : ICommand;
+public record CrearColaboradorCommand(Guid Id, string ClaveEmpleado, string Nombre, string Cargo, string Correo,string Dependencia ,DateTime FechaRegistro, string Estado) : ICommand;

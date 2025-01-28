@@ -13,14 +13,14 @@ public class Colaboradores : AggregateRoot<Guid>
     {
     }
 
-    // Constructor para crear una nueva capacitación
+
     public Colaboradores(
         Guid id,
         string claveEmpleado,
         string nombre,
-        string apellido,
-        string email,
-        string password,
+        string correo,
+        string dependencia,
+        string cargo,
         DateTime fechaRegistro,
         string estado)
     {
@@ -28,9 +28,9 @@ public class Colaboradores : AggregateRoot<Guid>
             id,
             claveEmpleado,
             nombre,
-            apellido,
-            email,
-            password,
+            correo,
+            dependencia,
+            cargo,
             fechaRegistro,
             estado
         )));
@@ -40,9 +40,9 @@ public class Colaboradores : AggregateRoot<Guid>
     public override Guid Id { get; set; }
     public string ClaveEmpleado { get; set; }
     public string Nombre { get; set; }
-    public string Apellido { get; set; }
-    public string? Email { get; set; }
-    public string Password { get; set; }
+    public string Cargo { get; set; }
+    public string? Correo { get; set; }
+    public string Dependencia { get; set; }
     public DateTime FechaRegistro { get; set; }
     public string Estado { get; set; }
     public bool IsDeleted { get; private set; } // Nueva propiedad
@@ -58,17 +58,17 @@ public class Colaboradores : AggregateRoot<Guid>
     public bool EsIgual(
         string claveEmpleado,
         string nombre,
-        string apellido,
-        string email,
-        string password,
+        string cargo,
+        string correo,
+        string dependencia,
         DateTime fechaRegistro,
         string estado)
     {
         return this.ClaveEmpleado == claveEmpleado &&
                this.Nombre == nombre &&
-               this.Apellido == apellido &&
-               this.Email == email &&
-               this.Password == password &&
+               this.Cargo == cargo &&
+               this.Correo == correo &&
+               this.Dependencia == dependencia &&
                this.FechaRegistro == fechaRegistro &&
                this.Estado == estado;
     }
@@ -79,9 +79,9 @@ public class Colaboradores : AggregateRoot<Guid>
         Id = @event.AggregateId;
         ClaveEmpleado = @event.ClaveEmpleado;
         Nombre = @event.Nombre;
-        Apellido = @event.Apellido;
-        Email = @event.Email;
-        Password = @event.Password;
+        Cargo = @event.Cargo;
+        Correo = @event.Correo;
+        Dependencia = @event.Dependencia;
         FechaRegistro = @event.FechaRegistro;
         Estado = @event.Estado;
         Version++;
@@ -90,18 +90,18 @@ public class Colaboradores : AggregateRoot<Guid>
     public void Actualizar(
         string claveEmpleado,
         string nombre,
-        string apellido,
-        string email,
-        string password,
+        string cargo,
+        string correo,
+        string dependencia,
         DateTime fechaRegistro,
         string estado)
     {
         var colaboradores = new ColaboradorActualizado
         (  Id,
         nombre,
-        apellido,
-        email,
-        password,
+        cargo,
+        correo,
+        dependencia,
 
 
         fechaRegistro,
@@ -115,9 +115,9 @@ public class Colaboradores : AggregateRoot<Guid>
     {
 
         Nombre = colaboradorActualizado.Nombre;
-        Apellido = colaboradorActualizado.Apellido;
-        Email = colaboradorActualizado.Email;
-        Password = colaboradorActualizado.Password;
+        Cargo = colaboradorActualizado.Cargo;
+        Correo = colaboradorActualizado.Correo;
+        Dependencia = colaboradorActualizado.Dependencia;
         FechaRegistro = colaboradorActualizado.FechaRegistro;
         Estado = colaboradorActualizado.Estado;
         Version++;

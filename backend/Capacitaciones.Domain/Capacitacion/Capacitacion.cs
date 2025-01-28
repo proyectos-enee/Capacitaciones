@@ -158,3 +158,4 @@ public class Capacitacion : AggregateRoot<Guid>
         Version++;
     }
 }
+

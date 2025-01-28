@@ -4,7 +4,10 @@ using Capacitaciones.Api.Capacitacion.RecuperarCapacitacion;
 using Capacitaciones.Api.Capacitacion.ActualizarCapacitacion;
 using Capacitaciones.Api.Capacitacion.EliminarCapacitacion;
 using Capacitaciones.Api.Capacitacion.RecuperarCapacitacionesDisponibles;
-using Capacitaciones.Api.Capacitacion.CrearColaborador;
+using Capacitaciones.Api.Capacitacion.RecuperarColaboradores;
+
+
+
 
 
 
@@ -25,7 +28,14 @@ public class Endpoints:CarterModule
         app.ActualizarCapacitacion();
         app.EliminarCapacitacion();
         app.RecuperarCapacitacionesDisponibles();
-        app.CrearColaborador();
+        app.RecuperarColaboradores();
+
+
+
+
+
+
+
 
 
 

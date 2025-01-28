@@ -15,8 +15,8 @@ public class CrearColaboradorCommandHandler:ICommandHandler<CrearColaboradorComm
     public async Task Handle(CrearColaboradorCommand command)
     {
 
-        var entity = new Colaboradores(command.Id, command.ClaveEmpleado, command.Nombre, command.Apellido,
-            command.Email, command.Password,  command.FechaRegistro, command.Estado);
+        var entity = new Colaboradores(command.Id, command.ClaveEmpleado, command.Nombre, command.Cargo,
+            command.Correo, command.Dependencia,  command.FechaRegistro, command.Estado);
         await Repository.Create(entity);
     }
 }

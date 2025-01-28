@@ -40,9 +40,4 @@
       <ProjectReference Include="..\Capacitaciones.Domain\Capacitaciones.Domain.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Capacitacion\ActualizarColaborador\" />
-      <Folder Include="Capacitacion\EliminarColaborador\" />
-    </ItemGroup>
-
 </Project>

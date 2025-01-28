@@ -1,17 +1,16 @@
 ﻿using Enee.Core.CQRS.Query;
-using Enee.Core.Domain;
 using Capacitaciones.Domain.Capacitacion.Projections.Capacitacion;
+using System.Collections.Generic;
 
-namespace Capacitaciones.Domain.Capacitacion.ConsultaCapacitacionesDisponibles;
-
-public class ConsultaCapacitacionesDisponibles:IQuery<IPaginated<CapacitacionDocumento>>, IPaginatedParams
+namespace Capacitaciones.Domain.Capacitacion.ConsultaCapacitacionesDisponibles
 {
-    public string Description { get; } = "Consulta de capacitaciones en forma paginada";
+    public class ConsultaCapacitacionesDisponibles : IQuery<IEnumerable<CapacitacionDocumento>>
+    {
+        public string Description { get; } = "Consulta de capacitaciones disponibles";
 
-    public string? NombreCorto { get; set; }
-    public string? Modalidad { get; set; }
-    public DateTime? FechaInicioRegistro { get; set; }
-    public DateTime? FechaFinRegistro { get; set; }
-    public int? PageSize { get; set; }
-    public int? Page { get; set; }
+        public string? NombreCorto { get; set; }
+        public string? Modalidad { get; set; }
+        public DateTime? FechaInicioRegistro { get; set; }
+        public DateTime? FechaFinRegistro { get; set; }
+    }
 }

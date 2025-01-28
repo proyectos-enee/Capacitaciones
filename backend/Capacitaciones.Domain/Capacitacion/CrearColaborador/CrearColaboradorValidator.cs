@@ -20,16 +20,16 @@ public class CrearColaboradorValidator : CommandValidatorBase<CrearColaboradorCo
             .NotNull().WithMessage("El nombre corto no puede ser nulo.")
             .MaximumLength(50).WithMessage("El nombre corto no debe superar los 50 caracteres.");
 
-        RuleFor(x => x.Apellido)
+        RuleFor(x => x.Cargo)
             .NotEmpty().WithMessage("El nombre largo es obligatorio.")
             .NotNull().WithMessage("El nombre largo no puede ser nulo.")
             .MaximumLength(100).WithMessage("El nombre largo no debe superar los 100 caracteres.");
 
-        RuleFor(x => x.Email)
+        RuleFor(x => x.Correo)
             .NotEmpty().WithMessage("La descripción es obligatoria.")
             .NotNull().WithMessage("La descripción no puede ser nula.");
 
-        RuleFor(x => x.Password)
+        RuleFor(x => x.Dependencia)
             .NotEmpty().WithMessage("El ente capacitador es obligatorio.")
             .NotNull().WithMessage("El ente capacitador no puede ser nulo.");
 
