@@ -6,10 +6,7 @@ using Capacitaciones.Api.Capacitacion.EliminarCapacitacion;
 using Capacitaciones.Api.Capacitacion.RecuperarCapacitacionesDisponibles;
 using Capacitaciones.Api.Capacitacion.RecuperarColaboradores;
 
-
-
-
-
+using Capacitaciones.Api.Capacitacion.RegistroColaborador;
 
 
 namespace Capacitaciones.Api.Capacitacion;
@@ -29,6 +26,7 @@ public class Endpoints:CarterModule
         app.EliminarCapacitacion();
         app.RecuperarCapacitacionesDisponibles();
         app.RecuperarColaboradores();
+        app.RegistrarColaborador();
 
 
 

@@ -1,6 +1,8 @@
 import { httpApi } from '../../../http/http-api.ts';
-import { useState, useEffect } from 'react';
+import { usePaginate } from '@common/hooks/use-paginate.ts';
+import { useState } from 'react';
 import { PaginableGrid } from '@components/grid/paginable-grid.tsx';
+import { PaginateResult } from '@common/hooks/models/paginate-result.ts';
 import MainCard from '@common/ui-component/cards/main-card.tsx';
 import { ColumnDef } from '@components/grid/models/column-def.tsx';
 import InfoIcon from '@mui/icons-material/Info';
@@ -8,31 +10,25 @@ import { Button } from '@components/button/button.tsx';
 import { Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 
 const Pagina = () => {
-  const [search, setSearch] = useState({
+  const [search, setSearch] = useState<any>({
     ClaveEmpleado: '', // Valor predeterminado para probar la API
+    PageSize: 5,
+    Page: 1,
   });
 
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedColaboradores, setSelectedColaboradores] = useState<any>(null);
-  const [colaboradores, setColaboradores] = useState<any[]>([]); // Estado para almacenar colaboradores
 
-  // Efecto para buscar colaboradores
-  useEffect(() => {
-    const buscarColaboradores = async () => {
-      if (search.ClaveEmpleado) {
-        try {
-          const response = await httpApi.get(`/capacitacion/ClaveEmpleado`);
-          setColaboradores(response.data); // Almacena los colaboradores en el estado
-        } catch (error) {
-          console.error('Error al buscar colaboradores:', error);
-        }
-      } else {
-        setColaboradores([]); // Si no hay clave, resetea la lista
-      }
-    };
+  // Consulta paginada
+  const [{ data }] = usePaginate<any>(httpApi, '/capacitacion/Test', search, {
+    pageIn: 1,
+    sizeIn: 5,
+    sizeOptions: [5, 10],
+  });
 
-    buscarColaboradores();
-  }, [search.ClaveEmpleado]); // Ejecuta la búsqueda cuando cambia ClaveEmpleado
+  const buscarColaboradores = () => {
+    setSearch({ ...search }); // Refrescar búsqueda
+  };
 
   const columns: ColumnDef[] = [
     {
@@ -88,13 +84,13 @@ const Pagina = () => {
               onChange={(e) => setSearch({ ...search, ClaveEmpleado: e.target.value })}
               style={{ padding: '5px', width: '200px' }}
             />
-            <Button onClick={() => setSearch({ ...search })}>Buscar</Button>
+            <Button onClick={buscarColaboradores}>Buscar</Button>
           </div>
         </div>
 
-        {/* Tabla de colaboradores */}
+        {/* Tabla de capacitaciones */}
         <PaginableGrid
-          paginable={{ items: colaboradores, total: colaboradores.length }} // Cambia esto para reflejar que no hay paginación
+          paginable={data as PaginateResult<any>}
           columnDefs={columns}
           getRowId={(row: any) => row.id}
         />

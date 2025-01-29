@@ -61,7 +61,7 @@ const Pagina = () => {
       />
       <Button type="submit" form="actualizarCapacitacion">
 
-        Actualizar
+        Guardar Cambios
       </Button>
     </MainCard>
   );
