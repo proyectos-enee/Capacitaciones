@@ -1,6 +1,7 @@
 ﻿using Ardalis.Specification;
 using Enee.Core.CQRS.Query;
 using Enee.Core.Domain.Repository;
+using Enee.Core.Domain;
 using Capacitaciones.Domain.Capacitacion.Projections.Capacitacion;
 using Enee.Core.Domain.Specs;
 using System.Collections.Generic;
@@ -8,16 +9,16 @@ using System.Threading.Tasks;
 
 namespace Capacitaciones.Domain.Capacitacion.ConsultaCapacitacionesDisponibles
 {
-    public class ConsultaCapacitacionesDisponiblesRunner : IQueryRunner<ConsultaCapacitacionesDisponibles, IEnumerable<CapacitacionDocumento>>
+    public class ConsultaCapacitacionesPaginadoRunner : IQueryRunner<ConsultaCapacitacionesPaginado, IPaginated<CapacitacionDocumento>>
     {
         public IReadOnlyDocumentRepository<CapacitacionDocumento> Repository { get; }
 
-        public ConsultaCapacitacionesDisponiblesRunner(IReadOnlyDocumentRepository<CapacitacionDocumento> repository)
+        public ConsultaCapacitacionesPaginadoRunner(IReadOnlyDocumentRepository<CapacitacionDocumento> repository)
         {
             Repository = repository;
         }
 
-        public async Task<IEnumerable<CapacitacionDocumento>> Run(ConsultaCapacitacionesDisponibles query)
+        public async Task<IPaginated<CapacitacionDocumento>> Run(ConsultaCapacitacionesPaginado query)
         {
             var spec = new SpecificationGeneric<CapacitacionDocumento>();
 
@@ -49,8 +50,8 @@ namespace Capacitaciones.Domain.Capacitacion.ConsultaCapacitacionesDisponibles
             spec.Query.OrderBy(x => x.FechaInicioRegistro);
 
             // Obtener todos los resultados que coincidan con los criterios
-            var result = await Repository.List(spec);
-            return result;
+            var paginated = await Repository.Paginate(query.Page, query.PageSize,spec);
+            return paginated;
         }
     }
 }

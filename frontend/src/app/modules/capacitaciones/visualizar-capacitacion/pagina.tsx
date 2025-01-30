@@ -65,7 +65,7 @@ const Pagina = () => {
           startIcon={<InfoIcon />}
           onClick={() => {
             console.log('Datos seleccionados:', rowData); // Debugging
-            setSelectedCapacitacion(rowData);
+            setSelectedCapacitacion(rowData); // Asegúrate de que rowData contenga todos los campos
             setOpenDialog(true);
           }}
           key={rowData.id}
@@ -92,12 +92,12 @@ const Pagina = () => {
               type="text"
               placeholder="Nombre Corto"
               value={search.nombreCorto || ''}
-              onChange={(e) => setSearch({ ...search, nombreCorto: e.target.value })}
+              onChange={e => setSearch({ ...search, nombreCorto: e.target.value })}
               style={{ padding: '5px', width: '200px' }}
             />
             <select
               value={search.modalidad || ''}
-              onChange={(e) => setSearch({ ...search, modalidad: e.target.value })}
+              onChange={e => setSearch({ ...search, modalidad: e.target.value })}
               style={{ padding: '5px', width: '200px' }}
             >
               <option value="">Todas</option>
@@ -109,18 +109,14 @@ const Pagina = () => {
               type="date"
               placeholder="Fecha Inicio"
               value={search.fechaInicioRegistro || ''}
-              onChange={(e) =>
-                setSearch({ ...search, fechaInicioRegistro: e.target.value })
-              }
+              onChange={e => setSearch({ ...search, fechaInicioRegistro: e.target.value })}
               style={{ padding: '5px', width: '200px' }}
             />
             <input
               type="date"
               placeholder="Fecha Fin"
               value={search.fechaFinRegistro || ''}
-              onChange={(e) =>
-                setSearch({ ...search, fechaFinRegistro: e.target.value })
-              }
+              onChange={e => setSearch({ ...search, fechaFinRegistro: e.target.value })}
               style={{ padding: '5px', width: '200px' }}
             />
             <Button onClick={buscarCapacitaciones}>Buscar</Button>
@@ -146,6 +142,9 @@ const Pagina = () => {
         <DialogContent>
           {selectedCapacitacion && (
             <div>
+              <p>
+                <strong>ID:</strong> {selectedCapacitacion.id || 'N/A'}
+              </p>
               <p>
                 <strong>Nombre Corto:</strong> {selectedCapacitacion.nombreCorto || 'N/A'}
               </p>

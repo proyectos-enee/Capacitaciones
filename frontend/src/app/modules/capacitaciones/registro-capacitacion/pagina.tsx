@@ -20,7 +20,7 @@ const Pagina = () => {
   const [selectedColaboradores, setSelectedColaboradores] = useState<any>(null);
 
   // Consulta paginada
-  const [{ data }] = usePaginate<any>(httpApi, '/capacitacion/Test', search, {
+  const [{ data }] = usePaginate<any>(httpApi, '/capacitacion/registro', search, {
     pageIn: 1,
     sizeIn: 5,
     sizeOptions: [5, 10],
